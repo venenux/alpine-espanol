@@ -21,13 +21,12 @@ Al iniciar Alpine preguntara pro el login, solo escribir `root` y pulsar enter p
 
 A diferencia de otros sistemas de instalacion, el de alpine es automatico en el disco, 
 y monta un viaje de particiones innecesarias, para hacer una configuracion manual 
-hay que ejecutar `fdisk`, particionar, y despues montarlo para `setup-disk` y alli indicar.
+hay que ejecutar `fdisk` y `blkid` para identificar, y despues montarlo para `setup-disk` y alli indicar.
 
-#### 1. Particionar
+#### 1. Particion a utilizar
 
-Se advierte dejar la estupidez de particionamiento complicado, no hay ninguna necesidad 
-de separar boot y demas, solamente home, porque se supone el linux es perfecto y no se jode!
-En debian desde que uso squeeze no separo para mis desktop solo en servidores.
+Aqui no se podra usar la estupidez de particionamiento complicado, porque ya hay otras particiones 
+usadas recordemos que usaremos "dual boot" o arranque dual con otro(s) sistema(s) instalados.
 La separacion era solo porque a medida se instalaba o necesitaba espacio no se 
 podia apagar la maquina y de paso los discos eran lentos y pequeños... 
 por ello existia las particiones y el LVM, cosa que hoy es innecesria en desktop..
@@ -37,41 +36,38 @@ y las maquinas sin LVM son EVIDENTEMENTE mas rapidas. Otra forma de evidenciarlo
 es usando un disco SSD, porque son mas rapidos, obvio el acceso es mas rapido.. 
 pienselo, LVM es una capa mas sobre las ya capas de manejo de sistema de ficheros...
 
-El disco se le borrara toda particion, si queire usar dualboot (WIP guia dual boot)
-secuencia de comandos OJO ESTAMOS USANDO MBR, para GPT es distinto, usaremos MBR, porque 
-ahorra unos microsegundos, esto porque la GPT tiene dos capas, la que ve el OS y 
-una extra que emula la MBR para que los OS viejos vean una sola particion que 
-indique que es del tipo GPT, esta capa de compatibilidad es tiempo muerto, asi 
-que usaremos MBR con solo particiones primarias, las extendidas tienen el mismo 
-defecto ya que necesitan un indice extra para indicar cuantas extendidas hay:
+**NOTA1: swap** si nohay swap crear una no mas de 2G es ilogico.. leer documentacion redhat y diseño del kernel.
+**NOTA2: LVM** en las laptops es mas que innecesario una swap grande o LVM ya que las pone mas lentas.
 
-* Ejecutar `fdisk /dev/sda`
-* Pulsar `d` al pedir numero pulsar `4` y borrara la particion 4.
-* Pulsar `d` al pedir numero pulsar `3` y borrara la particion 3.
-* Pulsar `d` al pedir numero pulsar `2` y borrara la particion 2.
-* Pulsar `d` al pedir numero pulsar `1` y borrara la particion 1.
-* Pulsar `n` y al preguntar entre "e" y "p" pulsar `p` siempre usar primaria
-* Preguntara numero particion pulsar `1` que sera la root
-* Preguntara "First cilinder" usar `2` no usar 1. En Last cilinder usar el tamaño asi: `+20G` para gigas
-* Pulsar `n` y al preguntar entre "e" y "p" pulsar `p` siempre usar primaria
-* Preguntara numero particion pulsar `2` que sera la root
-* Preguntara "First cilinder" usar `Enter` sin ingresar nada. En Last cilinder usar el tamaño asi: `+2G` para swap
-* Pulsar `n` y al preguntar entre "e" y "p" pulsar `p` siempre usar primaria
-* Preguntara numero particion pulsar `3` que sera la home
-* Preguntara "First cilinder" usar `Enter` sin ingresar nada. En Last cilinder usar el ultimo numero menos uno!
-
-**NOTA1: swap** no usar una swap de mas de 2G es ilogico.. leer documentacion redhat y diseño del kernel.
-**NOTA2: home** no usar nunca el primer o ultimo cilindro en discos, esto causa perdida de datos en desmonturas forzadas (ida de luz)
-**NOTA3** en las laptops es mas que innecesario una swap grande o LVM ya que las pone mas lentas.
-
-El mapa de disco quedara asi par mi caso de 320G :
+**identificar las particones existentes**: se realiza con `fdisk` asi:
 
 ```
-Device     Boot    Start       End   Sectors   Size Id Type
-/dev/sdb1  *          63  41945714  41945652    20G 83 Linux
-/dev/sdb2       41947136  46141439   4194304     2G 83 Linux
-/dev/sdb3       46141440 625142447 579001008 276,1G 83 Linux
+fdisk -l /dev/sda
+Disk /dev/sdb: 298,1 GiB, 320072933376 bytes, 625142448 sectors
+Identifier: 0x0009b7e5
+
+/dev/sda1  *           63  83907494  83907432    40G 83 Linux
+/dev/sda2        83907495 167766794  83859300    40G 83 Linux
+/dev/sda3       167766795 171975824   4209030     2G 82 Linux swap / Solaris
+/dev/sda4       172007955 625105214 453097260 216,1G 83 Linux
 ```
+
+Aqui tenemos dos particiones iguales sabemos ahora el numero (sda1 o sda2), 
+ahora para saber mas detallado cual usamos otra tecnica
+
+**identificar que particion de las existentes**: se realiza con `blkid` asi:
+
+```
+blkid
+/dev/sda1: LABEL="ROOTDEB7" UUID="14e50378-4938-46b4-b6aa-e7b2a6ea713e" SEC_TYPE="ext2" TYPE="ext3" PARTUUID="0009b7e5-01"
+/dev/sda2: LABEL="ROOTDEB6" UUID="4bc2dee3-251b-4110-ae67-c7d3fdeb5b51" SEC_TYPE="ext2" TYPE="ext3" PARTUUID="0009b7e5-02"
+/dev/sda3: UUID="b315f8a7-57da-46e9-a577-2b9f0e6eeacc" TYPE="swap" PARTUUID="0009b7e5-03"
+/dev/sda4: LABEL="ROOTHOME" UUID="9834e1cb-de1c-4998-ba37-0a1e010c71aa" TYPE="ext4" PARTUUID="0009b7e5-04"
+```
+
+Aqui usaremos la particion "sda1" porque la "sda2" esta el sistema que no queremos se altere, y 
+que de paso segun este documento sera el usado para comandar y gestionar el arranque con grub.
+
 
 #### 2. Configurar disco
 
