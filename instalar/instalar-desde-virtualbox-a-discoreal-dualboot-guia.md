@@ -68,6 +68,8 @@ blkid
 Aqui usaremos la particion "sda1" porque la "sda2" esta el sistema que no queremos se altere, y 
 que de paso segun este documento sera el usado para comandar y gestionar el arranque con grub.
 
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-03.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-03.png)
+
 
 #### 2. Configurar disco
 
@@ -90,9 +92,9 @@ el sistema operativo tiene muchos archivos pequeños asi que por eso usar un tam
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-04.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-04.png)
 
-# Instalacion Dual Boot
+# Instalacion
 
-Hay dos maners de usar arranque dual, una es que Alpine gestione el arranque y la otra es 
+Hay dos maneras de usar arranque dual, una es que Alpine gestione el arranque y la otra es 
 que otro linux gestione el arranque, en este documento se asume existe otro linux, 
 si quere que alpine gestione el arranque lease [instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md)
 
@@ -103,6 +105,8 @@ asi que cuidado con lo que escribe esto no es winbuntu, esto es linux okey:
 **ADVERTENCIAS** la cagada como todas las minimalistas es que se requiere internet, 
 a menos tengas una imagen ya instalada y simplemente la clones en el disco. 
 asi que **necesitas insternet si es primera vez o no tienes imagen alpine**.
+
+## Instalar el sistema base
 
 **IMPORTANTE** debes cuando llegue a la parte del disco "Which disks yous you like to use?" 
 contestar "none",de alli en adelante contestar "none" hasta salir, esto para permitir 
@@ -121,22 +125,50 @@ setup-disk -m sys /mnt
 ```
 
 Esto copiara el sistema al disco pero recordemos tenemos el sistema en una sola particion 
-y alpine es marico con eso, asi que hay que ajustarlo en el bootmanager config asi:
-
-```
-apk add nano
-nano /mnt/boot/extlinux.conf
-```
-
-A los parametros `KERNEL` y `APPEND` hay que indicar es desde el directorio `/boot/` 
-del disco iniciado adicionando en "KERNEL y agregando en "APPEND" en el parametro "initrd".
-En las imagenes se muestra todos estos, usar como referencia.
+y que tenemos otro linux en "/dev/sda2" en la segunda particion, asi que el siguiente apartado 
+es arrancar este linux en modo chroot y desde el mismo instalar/actualizar su manager de arranque.
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png)
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-10.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-10.png)
 
-![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-11.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-11.png)
+## Actualizar el arranque desde particion Linux otra
+
+(WIP) necesita chroot en el modo install y actualmente da problemas...
+
+## Actualizar el arranque desde particion Debian
+
+Recordemos que sera arranque dual pero que no sera administrado por Alpine, imaginemos tenemos Debian en la segunda particion:
+
+* Arrancamos con el cd de instalacion misma version a la instalado y misma arquitectura (ejemplo debian 6 con arm64)
+* Al iniciar se debe escoger "avanzado" y en este menu esta la opcion "Rescue mode" que se escogera
+* Se contestan las preguntas de idioma, teclado, hostname, etc hasta que pregunte por el sistema raiz
+* Cuando pregunte por el sistema de ficheros raiz, escoger la particion sda2 puesto alli tenemos el debian en nuestro caso.
+* Despues ofrece un menu, se escoge "Reinstalar el cargador de arranque Grub", este preguntara el dispositivo que es "/dev/sda"
+* con estos sencillisimos pasos ya el sistema de "sda2" Debian es el que maneja el arranque y Alpine no.
+* Despues de esto debemos arrancar el sistema Debian y alterar el grub para que coloque bien el Alpine
+* Ejecutar en uan consola en el Debian `blkid /dev/sda1` para saber el UUID de la particion Alpine.
+* Despues crear o editar el archivo `/etc/grub.d/40_custom` para agregar la entrada Alpine esta se detalla mas abajo.
+* Al final ejecutar `update-grub` y reinicar y probar.
+
+La entrada Alpine en `/etc/grub.d/40_custom` debe ser asu (el UUID se toma con blkid a sda1):
+
+```
+menuentry "Alpine Linux (on /dev/sda1)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set fd6dd397-42c4-4474-9096-e5a5dff0a861
+    linux /boot/vmlinuz-3.4.82-grsec root=UUID=fd6dd397-42c4-4474-9096-e5a5dff0a861  modules=sd-mod,usb-storage,ext3 ro
+    initrd /boot/initramfs-3.4.82-grsec
+}
+```
+
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-14.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-14.png)
+
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-15.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-15.png)
+
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-16.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-16.png)
 
 
 # Vease tambien:
