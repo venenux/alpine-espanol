@@ -1,7 +1,11 @@
-
 Debido a que no tenemos usb ni imagen alpine, ni cdrom usaremos virtualbox, 
-ojo esto necesita que el grup y vmimage sean con todo incluido.
-Para esto creamos una unidad que mapee el disco real:
+la instalacion sera en un solo disco, sin particiones extras mas que root.
+
+
+## preparar medios para instalar
+
+Para esto creamos una unidad que mapee el disco real como virtual y despues crear 
+una maquina virtualbox que lo utilize, todo lo haremos desde virtualbox:
 
 ```
 VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdb -filename /home/systemas/VirtualBox\ VMs/rawdisk-sdb.vmdk
@@ -10,6 +14,7 @@ VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdb -filename /home/syst
 Despues configuramos una maquina virtual sin sonido ojo, y arrancamos con ese disco:
 
 ![instalar-desde-virtualbox-a-discoreal-01.png](instalar-desde-virtualbox-a-discoreal-01.png)
+
 
 ## Configurar disco en donde instalar
 
@@ -31,22 +36,6 @@ y las maquinas sin LVM son EVIDENTEMENTE mas rapidas. Otra forma de evidenciarlo
 es usando un disco SSD, porque son mas rapidos, obvio el acceso es mas rapido.. 
 pienselo, LVM es una capa mas sobre las ya capas de manejo de sistema de ficheros...
 
-```
-fdisk /dev/sda
-Command (m for help): p
-Disk /dev/sdb: 298,1 GiB, 320072933376 bytes, 625142448 sectores
-Identifier: 0x0009b7e5
-
-Device     Boot    Start       End   Sectors   Size Id Type
-/dev/sdb1  *          63  41945714  41945652    20G 83 Linux
-/dev/sdb2       41945715  83907494  41961780    20G 83 Linux
-/dev/sdb3       83907495  88116524   4209030     2G 82 Linux swap / Solaris
-/dev/sdb4       88116525 625105214 536988690 256,1G 83 Linux
-
-
-Command (m for help): q
-```
-
 El disco se le borrara toda particion, si queire usar dualboot (WIP guia dual boot)
 secuencia de comandos OJO ESTAMOS USANDO MBR, para GPT es distinto, usaremos MBR, porque 
 ahorra unos microsegundos, esto porque la GPT tiene dos capas, la que ve el OS y 
@@ -55,6 +44,7 @@ indique que es del tipo GPT, esta capa de compatibilidad es tiempo muerto, asi
 que usaremos MBR con solo particiones primarias, las extendidas tienen el mismo 
 defecto ya que necesitan un indice extra para indicar cuantas extendidas hay:
 
+* Ejecutar `fdisk /dev/sda`
 * Pulsar `d` al pedir numero pulsar `4` y borrara la particion 4.
 * Pulsar `d` al pedir numero pulsar `3` y borrara la particion 3.
 * Pulsar `d` al pedir numero pulsar `2` y borrara la particion 2.
