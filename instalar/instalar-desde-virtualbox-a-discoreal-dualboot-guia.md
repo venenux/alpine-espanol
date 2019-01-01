@@ -11,9 +11,10 @@ una maquina virtualbox que lo utilize, todo lo haremos desde virtualbox:
 VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdb -filename /home/systemas/VirtualBox\ VMs/rawdisk-sdb.vmdk
 ```
 
-Despues configuramos una maquina virtual sin sonido ojo, y arrancamos con ese disco:
+Despues configuramos una maquina virtual sin sonido ojo, y arrancamos con ese disco, 
+Al iniciar Alpine preguntara pro el login, solo escribir `root` y pulsar enter permite iniciar:
 
-![instalar-desde-virtualbox-a-discoreal-01.png](instalar-desde-virtualbox-a-discoreal-01.png)
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-01.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-01.png)
 
 
 ## Configurar disco en donde instalar
@@ -91,12 +92,16 @@ En el caso de la particion home esta si dejarla con 4096 ya que alli ud guardara
 Esto es porque alocar un bloque grande para un archivo pequeño hace que las busquedas sean lentas, 
 el sistema operativo tiene muchos archivos pequeños asi que por eso usar un tamaño de bloque pequeño.
 
-![instalar-desde-virtualbox-a-discoreal-02.png](instalar-desde-virtualbox-a-discoreal-02.png)
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-04.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-04.png)
 
-## instalador
+# Instalacion Dual Boot
+
+Hay dos maners de usar arranque dual, una es que Alpine gestione el arranque y la otra es 
+que otro linux gestione el arranque, en este documento se asume existe otro linux, 
+si quere que alpine gestione el arranque lease [instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md)
 
 Alpine usa una version cortada de Libc llamda `musl` desde la 3.X, en 
-las versiones viejas usaba `uClibc` ambas siempre ponen el teclado a inglesh, 
+las versiones viejas usaba `uClibc` ambas siempre ponen el teclado a ingles, 
 asi que cuidado con lo que escribe esto no es winbuntu, esto es linux okey:
 
 **ADVERTENCIAS** la cagada como todas las minimalistas es que se requiere internet, 
@@ -119,7 +124,7 @@ disco, ejecutar el configurador del disco para colocar lso archivos en el disco:
 setup-disk -m sys /mnt
 ```
 
-Esto copiara el sistema al disco pero recordemos tenemos el sistema en uan sola particion 
+Esto copiara el sistema al disco pero recordemos tenemos el sistema en una sola particion 
 y alpine es marico con eso, asi que hay que ajustarlo en el bootmanager config asi:
 
 ```
@@ -129,11 +134,18 @@ nano /mnt/boot/extlinux.conf
 
 A los parametros `KERNEL` y `APPEND` hay que indicar es desde el directorio `/boot/` 
 del disco iniciado adicionando en "KERNEL y agregando en "APPEND" en el parametro "initrd".
-En la imagen se muestra este archivo, usar como referencia.
+En las imagenes se muestra todos estos, usar como referencia.
 
-![instalar-desde-virtualbox-a-discoreal-01.png](instalar-desde-virtualbox-a-discoreal-08.png)
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png)
 
-![instalar-desde-virtualbox-a-discoreal-01.png](instalar-desde-virtualbox-a-discoreal-10.png)
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-10.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-10.png)
 
-![instalar-desde-virtualbox-a-discoreal-01.png](instalar-desde-virtualbox-a-discoreal-11.png)
+![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-11.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-11.png)
 
+
+# Vease tambien:
+
+* [README informacion general](../README.md)
+* [instalar-desde-usb-cdrom-alpinesolo-guia.md](instalar-desde-usb-cdrom-a-discoreal-alpinesolo-guia.md)
+* [instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md](instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md)
+* [instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md)
