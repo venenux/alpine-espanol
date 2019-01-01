@@ -5,7 +5,7 @@ esto porque es muy carente la informacion en español de Alpine ademas de incorr
 1. [instalar-desde-usb-cdrom-alpinesolo-guia.md](instalar-desde-usb-cdrom-alpinesolo-guia.md)
 Este documento asume tiene un discoduro, cdrom ya grabado (o usb) y lo borrara todo, para solo tener alpine, 
 el particionamiento sera automatizado, lo que nolo optimizara y colocara mas de una particion para escritorio.
-2. [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md)
+2. [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
 Este documento asume tiene un discoduro pero sin usb o cdrom y lo borrara todo, para solo tener alpine, 
 pero el arranque no sera desde Alpine, sino desde otro linux mas facil y estable de usar, 
 este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
