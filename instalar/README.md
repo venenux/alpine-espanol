@@ -33,7 +33,7 @@ es uan rolling release y un nuevo version de programa puede romper otro sino se 
 # Vease tambien:
 
 * [README informacion general](../README.md)
-* [Entorno grafico](../programas/README-escritorios.md)
-* [Instalacion de programas](../programas/README.md)
+* [Entorno grafico](../recetas/README-escritorios.md)
+* [Instalacion de programas](../recetas/programas-esenciales-todo-en-uno.md)
 * [Informes y tablas de compatibilidad](../informes/hardware-y-versiones-alpine-recomendados.md)
 

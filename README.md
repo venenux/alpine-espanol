@@ -33,8 +33,8 @@ En alpine los programas se instalan desde la red, pienselo, aunque compre un CD 
 igual es con los paquetes, estos no estan en su sistema, si no tiene internet se puede descargar todos 
 en un directorio y instalar desde alli con una simple linea.
 
-Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md)
-(WIP) repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)
+Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md), 
+Receta rapida para llegar a un entorno todo en uno: [recetas/programas-esenciales-todo-en-uno.md](recetas/programas-esenciales-todo-en-uno.md)
 
 ### QUE VERSION ME CONVIENE PARA QUE HARDWARE
 

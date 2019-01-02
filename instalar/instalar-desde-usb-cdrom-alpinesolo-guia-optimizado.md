@@ -151,5 +151,5 @@ En las imagenes se muestra todos estos, usar como referencia.
 * [README informacion general](../README.md)
 * [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
 * [Entorno grafico](../programas/README-escritorios.md)
-* [Instalacion de programas](../programas/README.md)
+* [Instalacion de programas](../programas/programas-esenciales-todo-en-uno.md)
 * [Informes y tablas de compatibilidad](../informes/hardware-y-versiones-alpine-recomendados.md)
