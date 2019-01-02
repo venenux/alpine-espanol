@@ -186,3 +186,4 @@ menuentry "Alpine Linux (on /dev/sda1)" {
 * [instalar-desde-usb-cdrom-alpinesolo-guia.md](instalar-desde-usb-cdrom-a-discoreal-alpinesolo-guia.md)
 * [instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md](instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md)
 * [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
+* [Informes y tablas de compatibilidad](../informes/hardware-y-versiones-alpine-recomendados.md)

@@ -12,28 +12,32 @@ Alpine permite instalar desde disco, usb, o red, en las dos primeras usa una ima
 que en la tercera se necesita una imagen dumpeada o un Alpine desde otra maquina. Por facilidad, 
 asumiremos es la primera vez y asumiremos las dos primeras.
 
-1. [instalar/instalar-desde-usb-cdrom-alpinesolo-guia.md](instalar/instalar-desde-usb-cdrom-alpinesolo-guia.md)
-Este documento asume tiene un discoduro, cdrom ya grabado (o usb) y lo borrara todo, para solo tener alpine, 
-el particionamiento sera automatizado, lo que nolo optimizara y colocara mas de una particion para escritorio.
-2. [instalar/instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar/instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
-Este documento asume tiene un discoduro pero sin usb o cdrom y lo borrara todo, para solo tener alpine, 
+[instalar/instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md](instalar/instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md)
+Este documento asume tiene un discoduro ya particionado, el cdrom ya grabado (o usb), para adicionar Alpine, 
 pero el arranque no sera desde Alpine, sino desde otro linux mas facil y estable de usar, 
 este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
-3. [instalar/instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md](instalar/instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md)
-Este documento asume tiene un discoduro pero sin usb o cdrom y lo borrara todo, para solo tener alpine, 
-pero se modificara para usar Grub desde el mismo Alpine y sera Alpine quien comande el arranque, 
-este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
 
-## QUE VERSION ME CONVIENE PARA QUE HARDWARE
+Para mejores u/o otras combinaiones de instalacion leer [instalar/README.md](instalar/README.md)
 
-No crea el embuste "Alpine es liviando instala lo ultimo", alpine usa kernel 4.X y 
+## Instalar programas
+
+En alpine los programas se instalan desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
+igual es con los paquetes, estos no estan en su sistema, si no tiene internet se puede descargar todos 
+en un directorio y instalar desde alli con una simple linea.
+
+**Importante** al igual que ocurre en Debian y otras, muchos paquetes estan "cortos" como ejemplo, si 
+comparamos `ffmpeg` de Debian vs el de Marillat el de Debian sabemos es basura, pasa peor en Alpine, 
+los paquetes no siempre son compilados por expertos y pueden esten sin uno que otro soporte, esto 
+es muy muy frecuente en los paquetes multimedia y de juegos.
+
+WIP repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)
+
+### QUE VERSION ME CONVIENE PARA QUE HARDWARE
+
+Dado Alpine usa kernel 4.X y compila dependeindo la disponibilidad de los colaboradores 
 este requiere de hardware minimo desde 2010 dejando mucho por detras, si ud posee 
 hardware por ejemplo Semprom, K6-III, Pentium4, PentiumIII, PentiumII nopuede instalar 
-una version mas alla de Alpine 3.2 (este es el ultimo con kernel 3.X), aunque en casos 
-especiales como con Atom, Semprom, Pentium4 o Duron puede usar Alpine 3.3 pero maximo 3.5 
-esto por remocion de roporte en tarjetas integradas. La excepcion es los Intel i810/i815 
-en los cuales le fue removido el soporte 3D aqui dara mucho problemas Alpine. Para estos 
-se recomienda Debian etch/lenny con los paquetes tuneados de VenenuX sari sari.
+una version mas alla de Alpine 3.2 (este es el ultimo con kernel 3.X).
 
 Para mayor informacion consultar la tabla de hardware y alpines recomendados:
 * [informes/hardware-y-versiones-alpine-recomendados.md](informes/hardware-y-versiones-alpine-recomendados.md)
@@ -42,19 +46,6 @@ Para mayor informacion consultar la tabla de hardware y alpines recomendados:
 
 Falso: desde kernel 4 el soporte de speedstep quedo deprecated para estos procesadores. 
 la solucion es instalar Alpine 3.2 que tiene kernel 3.X y aun soporte bien maquinas viejas.
-
-## Instalar programas
-
-En alpine los programas se instalar desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
-igual es con los paquetes, este no esta en su sistema, si no tiene internet se puede descargar todos 
-en un directorio y instalar desde alli con una simple linea.
-
-**Importante** al igual que ocurre en Debian y otras, muchos paquetes estan "cortos" como ejemplo, si 
-comparamos `ffmpeg` de Debian vs el de Marillat el de Debian sabemso es basura, igual pasa en Alpine, 
-los paquetes no siempre son compilados por expertos y pueden esten sin uno que otro soporte, esto 
-es muy muy frecuente en los paquetes multimedia y de juegos.
-
-WIP repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)
 
 # Aclaratorias, ventajas y deficiencias
 
