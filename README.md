@@ -3,34 +3,38 @@ https://mckayemu.github.io/alpineinstalls/
 # alpineinstalls
 
 Documentos en español por periodos, para la experiencia usuario con alpine. 
-Estos documentos se enfocan mas en multimedia, asi como de solo dos escritorios LXDE/openbox y lxqt/xfce, 
-ya que mate esta muy casado con systemd.
+**Esto se enfoca solo en multimedia, asi como  escritorios LXDE/openbox y lxqt/xfce,** 
+La razon es obvia, si quiero un servidor monto "yerro" en un AWS, ahora para maquinas viejas 
+si no arranca un escritorio es ilogico porque como haces que otra persona te ayude?.
+
+* [Inicio aqui: instalar alpine con varias recetas](#inicio)
+* [Despues nstalar programas varios segun gusto](#instalar-programas)
+  * [Que version me conviene y en que hardware???](#que-version-me-conviene-para-que-hardware)
+* [El Porque debo usar Alpine](#el-porque-debo-usar-alpine)
+  * [Porque no deberia usarla](#porque-no-deberia-usarla)
+* [Aclaratorias ventajas y deficiencias](#aclaratorias-ventajas-y-deficiencias)
 
 ### Inicio:
 
 Alpine permite instalar desde disco, usb, o red, en las dos primeras usa una imagen arrancable mientras 
 que en la tercera se necesita una imagen dumpeada o un Alpine desde otra maquina. Por facilidad, 
-asumiremos es la primera vez y asumiremos las dos primeras.
+asumiremos es la primera vez y asumiremos las dos primeras:
 
 [instalar/instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md](instalar/instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md)
 Este documento asume tiene un discoduro ya particionado, el cdrom ya grabado (o usb), para adicionar Alpine, 
 pero el arranque no sera desde Alpine, sino desde otro linux mas facil y estable de usar, 
 este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
 
-Para mejores u/o otras combinaiones de instalacion leer [instalar/README.md](instalar/README.md)
+Para mejores u/o otras combinaciones de instalacion leer [instalar/README.md](instalar/README.md)
 
-## Instalar programas
+### Instalar programas
 
 En alpine los programas se instalan desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
 igual es con los paquetes, estos no estan en su sistema, si no tiene internet se puede descargar todos 
 en un directorio y instalar desde alli con una simple linea.
 
-**Importante** al igual que ocurre en Debian y otras, muchos paquetes estan "cortos" como ejemplo, si 
-comparamos `ffmpeg` de Debian vs el de Marillat el de Debian sabemos es basura, pasa peor en Alpine, 
-los paquetes no siempre son compilados por expertos y pueden esten sin uno que otro soporte, esto 
-es muy muy frecuente en los paquetes multimedia y de juegos.
-
-WIP repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)
+Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md)
+(WIP) repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)
 
 ### QUE VERSION ME CONVIENE PARA QUE HARDWARE
 
@@ -46,6 +50,27 @@ Para mayor informacion consultar la tabla de hardware y alpines recomendados:
 
 Falso: desde kernel 4 el soporte de speedstep quedo deprecated para estos procesadores. 
 la solucion es instalar Alpine 3.2 que tiene kernel 3.X y aun soporte bien maquinas viejas.
+
+# El Porque debo usar Alpine
+
+1. Porque la distro que usas esta llena de malditos windosers que terminaron de ponerla lenta.. 
+pero no mas que eso.. de resto tendras que usar la distro lenta..
+2. Porque malditamente es rapida, quieres ir rapido o quieres ser un winbuntero?
+2. Alpine es para valientes, para linuxeros de verdad, si quieres volver a la prehistoria 
+pero con la ventaja de la velocidad de la luz, esta es la distro..
+
+Sep, es como volver a la prehistoria,rustica, pero simple, rudimentaria pero rapida.. que se le va hacer.
+
+#### Porque no deberia usarla
+
+* Porque yo solo queria poner algo mas liviano para usar libreoffice, 
+y termine compilando demasiados programas y no haciendo eldocumento de texto que queria...
+* Porque tengo una pc vieja laptop, pero sucede que por ser minimalista no tiene soporte 
+ya que nunca la han probado y no hacen un kernel contodo metido sino minimo...
+* Porque soy un winloser ignorate y me gustar hacer las cosas con dos click, 
+para ser flajelandome cada vez el tecnico cobre que jode para seguir dejando lenta la pc
+
+**IMPORTANTE** esta ultima es importante, es un requisito imprescindible para ser windoser.
 
 # Aclaratorias, ventajas y deficiencias
 
