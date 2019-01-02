@@ -3,23 +3,14 @@ https://mckayemu.github.io/alpineinstalls/
 # alpineinstalls
 
 Documentos en español por periodos, para la experiencia usuario con alpine. 
-Estos documentos se enfocan mas en multimedia, asi como de solo dos escritorios LXDE/openbox y lxqt, 
+Estos documentos se enfocan mas en multimedia, asi como de solo dos escritorios LXDE/openbox y lxqt/xfce, 
 ya que mate esta muy casado con systemd.
 
-Todo manera **require tener internet para instalar un buen escritorio**: lamentablemente 
-las distro minimalistas no tienen mecanismos de emergencia para falla de redes y depende fuertemente de internet; 
-aunque el ISO trae todo para instalar, asume un servidor y la mayoria de los programas utiles de escritorio 
-no estan y solo estan en el repositorio.
+### Inicio:
 
-## Inicio:
-
-Alpine permite instalar desde disco, usb, o red, en las dos primeras e usa una imagen ISO mientras 
+Alpine permite instalar desde disco, usb, o red, en las dos primeras usa una imagen arrancable mientras 
 que en la tercera se necesita una imagen dumpeada o un Alpine desde otra maquina. Por facilidad, 
 asumiremos es la primera vez y asumiremos las dos primeras.
-
-**¿No tiene CD o USB?** hay varias tecnicas, **sin embargo la mas familiar al nuevo usuario es usando virtualbox, 
-ya que las demas requiere de conocimientos de red y de el mismo linux** incluso de Alpine, y se supone 
-que este inicio es para nuevos usuarios. Mas adelante se conocera es la menos facil pero la mas familiar.
 
 1. [instalar/instalar-desde-usb-cdrom-alpinesolo-guia.md](instalar/instalar-desde-usb-cdrom-alpinesolo-guia.md)
 Este documento asume tiene un discoduro, cdrom ya grabado (o usb) y lo borrara todo, para solo tener alpine, 
@@ -33,13 +24,45 @@ Este documento asume tiene un discoduro pero sin usb o cdrom y lo borrara todo, 
 pero se modificara para usar Grub desde el mismo Alpine y sera Alpine quien comande el arranque, 
 este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
 
+## QUE VERSION ME CONVIENE PARA QUE HARDWARE
+
+No crea el embuste "Alpine es liviando instala lo ultimo", alpine usa kernel 4.X y 
+este requiere de hardware minimo desde 2010 dejando mucho por detras, si ud posee 
+hardware por ejemplo Semprom, K6-III, Pentium4, PentiumIII, PentiumII nopuede instalar 
+una version mas alla de Alpine 3.2 (este es el ultimo con kernel 3.X), aunque en casos 
+especiales como con Atom, Semprom, Pentium4 o Duron puede usar Alpine 3.3 pero maximo 3.5 
+esto por remocion de roporte en tarjetas integradas. La excepcion es los Intel i810/i815 
+en los cuales le fue removido el soporte 3D aqui dara mucho problemas Alpine. Para estos 
+se recomienda Debian etch/lenny con los paquetes tuneados de VenenuX sari sari.
+
+Para mayor informacion consultar la tabla de hardware y alpines recomendados:
+* [informes/hardware-y-versiones-alpine-recomendados.md](informes/hardware-y-versiones-alpine-recomendados.md)
+
+> No pero yo tengo Alpine isntalado en mi Pemtium 4 y funciona bien
+
+Falso: desde kernel 4 el soporte de speedstep quedo deprecated para estos procesadores. 
+la solucion es instalar Alpine 3.2 que tiene kernel 3.X y aun soporte bien maquinas viejas.
+
+## Instalar programas
+
+En alpine los programas se instalar desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
+igual es con los paquetes, este no esta en su sistema, si no tiene internet se puede descargar todos 
+en un directorio y instalar desde alli con una simple linea.
+
+**Importante** al igual que ocurre en Debian y otras, muchos paquetes estan "cortos" como ejemplo, si 
+comparamos `ffmpeg` de Debian vs el de Marillat el de Debian sabemso es basura, igual pasa en Alpine, 
+los paquetes no siempre son compilados por expertos y pueden esten sin uno que otro soporte, esto 
+es muy muy frecuente en los paquetes multimedia y de juegos.
+
+WIP repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)
+
 # Aclaratorias, ventajas y deficiencias
 
-Es importante que para algunos que se creen espertos linux Alpine difiere y tiene algunas
-desventajas asi como cambios respectos otras distros, las mas importantes:
+Es importante que para algunos que se creen expertos linux Alpine es para machos, 
+sin embargo difiere y tiene algunas desventajas asi como cambios respectos otras distros.
 
 Las controversias sobre estabilidad y garantias viene dado por las dos mas grandes diferencias, 
-el uso de musc libc y el que es una rolling release y una nuevo version de programa puede romper otro 
+el uso de musc libc y el que es una rolling release y una nueva version de programa puede romper otro 
 sino se maneja el que tambine se tendra que actualizar sus dependencias, pro lo general 
 el que empaqueta es solo a manera de colaboracion y cuando no es experto sucede esto, 
 ya que no es una distro extremadamente usada no se cubren todos los casos de uso (importante acotacion).
@@ -69,15 +92,3 @@ de funcionar repentinamente, al no ser como Debian esto es lo normal en este tip
 distribuciones.. con la unica ventaja que esta siempre al dia pero no garantiza unicidad.
 
 
-## Instalar programas
-
-En alpine los programas se instalar desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
-igual es con los paquetes, este no esta en su sistema, si no tiene internet se puede descargar todos 
-en un directorio y instalar desde alli con una simple linea.
-
-**Importante** al igual que ocurre en Debian y otras, muchos paquetes estan "cortos" como ejemplo, si 
-comparamos `ffmpeg` de Debian vs el de Marillat el de Debian sabemso es basura, igual pasa en Alpine, 
-los paquetes no siempre son compilados por expertos y pueden esten sin uno que otro soporte, esto 
-es muy muy frecuente en los paquetes multimedia y de juegos.
-
-WIP repo local y disco a distribuir con todo para no depender de internet (y con paquetes bien hecho no los chuutos incompletos)

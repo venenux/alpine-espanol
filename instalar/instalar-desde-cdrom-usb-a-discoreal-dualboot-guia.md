@@ -3,23 +3,24 @@ Este documento guiara para instalar Alpine optimizado y usando dual boot, pero
 el gestor de arranque sera comandado desde el otro sistema que asumiremos Linux y con Grub.
 Debe descargar un ISO de Alpine version "extended" recomendable para internet lento.
 
-Debido a que no tenemos usb ni imagen alpine por red, ni cdrom, usaremos VirtualBox, 
-ya que asume no hay CD, DVD o USB para grabar la ISO descargada, si puede grabar a CD/DVD 
-o usar USB lease: [instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md](instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md)
+Si no posee un USBdrive puede grabar el archivo ISO en un CD o DVD, si no posee ninguno 
+lease: [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-19.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-19.png)
 
 ## preparar medios para instalar
 
-**Monte el disco real como esclavo en la pc**, si usa laptop necesitara una bahia de disco externo.
-Para esto creamos una unidad que mapee el disco real como virtual y despues crear 
-una maquina virtualbox que lo utilize, todo lo haremos desde virtualbox:
+Alpine desde la version 3.4 es "isohybrid" lo que significa que puede hacer facil un USB arrancable 
+simplemente copiando su contenido en el dispositivo entero, para ello debe identificar el 
+dispositivo usando `blkid` y despues asumiendo el USB es "sde" se realiza el comando:
 
 ```
-VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdb -filename /home/systemas/VirtualBox\ VMs/rawdisk-sdb.vmdk
+cp alpine-extended-3.8.2-x86.iso /dev/sde
 ```
 
-Despues configuramos una maquina virtual sin sonido ojo, y arrancamos con ese disco, 
+**IMPORTANTE** aqui se identifico el disco USB como `/dev/sde` esto se identifica con `blkid` .
+
+Despues hacemos que arranque la maquina el disco USB en vez del disco duro, y arrancara el linux.
 Al iniciar Alpine preguntara pro el login, solo escribir `root` y pulsar enter permite iniciar:
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-01.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-01.png)
@@ -184,4 +185,4 @@ menuentry "Alpine Linux (on /dev/sda1)" {
 * [README informacion general](../README.md)
 * [instalar-desde-usb-cdrom-alpinesolo-guia.md](instalar-desde-usb-cdrom-a-discoreal-alpinesolo-guia.md)
 * [instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md](instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md)
-* [instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia-grub.md)
+* [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
