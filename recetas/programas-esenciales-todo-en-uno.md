@@ -100,6 +100,8 @@ necesitamos el subsistema grafico, soporte 3d y configuracion de placa video:
 
 ```
 apk add eudev udisks2 udisks2-doc
+rc-update add udev
+rc-service udev start
 apk add xorg-server xorg-server-xephyr xf86-video-vesa xf86-video-intel xf86-input-evdev  xinit
 apk add xf86-input-mouse xf86-input-synaptics xf86-input-keyboard font-util font-util-doc fontconfig
 ```
@@ -190,17 +192,17 @@ apk add sdl sdl-doc sdl_image sdl_mixer sdl2 sdl2_image sdl2_mixer sdl2_ttf
 apk add dbus dbus-x11 dbus-glib dhcpcd-dbus dbus-libs dbus-doc dbus-glib-doc
 rc-service dbus start
 rc-update add dbus
-apk add fuse fuse-doc sshfs gvfs gvfs-afp gvfs-archive gvfs-dav gvfs-fuse gvfs-gphoto gvfs-mtp gvfs-doc
-apk add desktop-file-utils gnome-vfs gnome-keyring gnome-power-manager zenity compton comton-doc
+apk add fuse fuse-doc sshfs gvfs gvfs-afp gvfs-archive gvfs-dav gvfs-fuse gvfs-mtp
+apk add desktop-file-utils gnome-vfs gnome-keyring gnome-power-manager zenity compton compton-doc
 apk add openbox wbar gpicview leafpad gucharmap pcmanfm ghostscript fbpanel terminator terminator-doc
 apk add arandr modemmanager networkmanager network-manager-applet network-manager-applet-doc
 apk add gnumeric abiword abiword-doc abiword-plugin-gimp abiword-plugin-freetranslation abiword-plugin-presentation abiword-plugin-pdf abiword-plugin-google
-apk add aumix deadbeef mplayer x265 x264 ffmpeg gnomad2 gnome-bluetooth mpv mpv-doc mpv-libs
+apk add aumix deadbeef x265 x264 ffmpeg gnomad2 gnome-bluetooth mpv mpv-doc mpv-libs
 apk add guvcview inkscape-view inkscape-doc youtube-dl espeak gimp gimp-doc gphoto2
 apk add font-adobe-75dpi font-adobe-100dpi font-adobe-utopia-75dpi
 apk add font-bitstream-75dpi font-bitstream-100dpi font-bitstream-type1
 apk add font-xfree86-type1 font-cronyx-cyrillic font-misc-cyrillic font-croscore font-noto
-apk add gst-plugins-ugly1 gst-plugins-ugly0.10 gst-plugins-bad1 gst-plugins-bad0.10
+apk add gst-plugins-ugly gst-plugins-ugly0.10 gst-plugins-bad gst-plugins-bad0.10
 apk add lxdm lxpolkit lxsession openbox-doc xdg-utils 
 apk add faenza-icon-theme
 ```
