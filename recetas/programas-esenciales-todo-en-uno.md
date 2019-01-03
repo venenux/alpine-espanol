@@ -112,7 +112,7 @@ apk add xf86-input-mouse xf86-input-synaptics xf86-input-keyboard font-util font
 
 ```
 apk add glib libxcb libxrandr libxv libxxf86vm libxxf86misc libxmu xcb-util-cursor xcb-util-image xcb-util-keysyms
-apk add mesa mesa-gl mesa-egl mesa-gles mesa-gbm mesa-glapi mesa-osmesa xf86-video-modesetting
+apk add libva libva-glx mesa mesa-gl mesa-egl mesa-gles mesa-gbm mesa-glapi mesa-osmesa xf86-video-modesetting
 ```
 
 **NOTA** no instalar kbd si tiene laptop a menos que sepa lo que hace
@@ -122,13 +122,13 @@ apk add mesa mesa-gl mesa-egl mesa-gles mesa-gbm mesa-glapi mesa-osmesa xf86-vid
 * Intel:
 
 ```
-apk add xf86-video-intel mesa-dri-intel mesa-vulkan-intel
+apk add xf86-video-intel mesa-dri-intel mesa-vulkan-intel libva-intel-driver
 ```
 
 * AMD/ati:
 
 ```
-apk add xf86-video-r128 xf86-video-ati mesa-dri-ati mesa-vulkan-ati
+apk add xf86-video-r128 xf86-video-ati mesa-dri-ati mesa-vulkan-ati 
 ```
 
 * Nvidia:
