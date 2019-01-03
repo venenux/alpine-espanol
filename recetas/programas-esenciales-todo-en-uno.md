@@ -2,6 +2,10 @@
 Esto es escritorio, no servidor, en escritorio se necesita de todo, la seguridad es solo 
 en dos lugares, el naveador y el ssh (ya que no montaremos ningun sistema web como servicio mas que desarrollar).
 
+Este documento asume minimo Alpine 3.3 y maximo alpine 3.9 para otras versiones puede o no funcionar.
+
+* Si algo no funciona corrobore: [hardware-y-versiones-alpine-recomendados.md](hardware-y-versiones-alpine-recomendados.md)
+
 
 # habilitar repositorios
 ----------------------------------------
@@ -216,7 +220,8 @@ apk add faenza-icon-theme
 apk add wpa_supplicant
 rc-update add wpa_supplicant default
 rc-service wpa_supplicant start
-apk add modemmanager networkmanager network-manager-applet network-manager-applet-doc networkmanager-doc
+apk add modemmanager usb-modeswitch usb-modeswitch-udev 
+apk add networkmanager network-manager-applet network-manager-applet-doc networkmanager-doc
 rc-update add networkmanager default
 rc-service networkmanager start
 apk add pidgin pidgin-doc 
@@ -264,7 +269,7 @@ apk add bzr bzr-doc maven cvs
 ## Bases de datos
 
 ```
-apk add odbc db db-c++ 
+apk add unixodbc db db-c++ psqlodbc
 apk add sqlite sqlite-libs sqlite-doc
 apk add mariadb mariadb-server-utils 
 ```
@@ -343,3 +348,8 @@ chroot /srv/debian/chroot-$debflav /bin/bash
 
 **NOTA** para alpine 2.4 o 2.6 necesitaras: `for i in /proc/sys/kernel/grsecurity/chroot_*; do echo 0 | tee $i; done`
 
+
+# Vease tambien:
+
+* [../README-md (indice)](../README-md)
+* [Informaciones y notas](../informes/)
