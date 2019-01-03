@@ -53,6 +53,8 @@ apk add tar-doc zlib-doc xz-doc zip-doc p7zip-doc cpio-doc lha-doc sharutils-doc
 ## comunicacion e internet consola
 
 ```
+apk add wpa_supplicant
+rc-update add wpa_supplicant default
 apk add irssi irssi-doc irssi-proxy fish weechat weechat-aspell weechat-lua weechat-python weechat-perl
 apk add aria2 wget wget-doc elinks elinks-doc macchanger macchanger-doc 
 ```
@@ -192,10 +194,9 @@ apk add sdl sdl-doc sdl_image sdl_mixer sdl2 sdl2_image sdl2_mixer sdl2_ttf
 apk add dbus dbus-x11 dbus-glib dhcpcd-dbus dbus-libs dbus-doc dbus-glib-doc
 rc-service dbus start
 rc-update add dbus
-apk add fuse fuse-doc sshfs gvfs gvfs-afp gvfs-archive gvfs-dav gvfs-fuse gvfs-mtp
+apk add arandr fuse fuse-doc sshfs gvfs gvfs-afp gvfs-archive gvfs-dav gvfs-fuse gvfs-mtp
 apk add desktop-file-utils gnome-vfs gnome-keyring gnome-power-manager zenity compton compton-doc
 apk add openbox wbar gpicview leafpad gucharmap pcmanfm ghostscript fbpanel terminator terminator-doc
-apk add arandr modemmanager networkmanager network-manager-applet network-manager-applet-doc
 apk add gnumeric abiword abiword-doc abiword-plugin-gimp abiword-plugin-freetranslation abiword-plugin-presentation abiword-plugin-pdf abiword-plugin-google
 apk add aumix deadbeef x265 x264 ffmpeg gnomad2 gnome-bluetooth mpv mpv-doc mpv-libs
 apk add guvcview inkscape-view inkscape-doc youtube-dl espeak gimp gimp-doc gphoto2
@@ -203,13 +204,21 @@ apk add font-adobe-75dpi font-adobe-100dpi font-adobe-utopia-75dpi
 apk add font-bitstream-75dpi font-bitstream-100dpi font-bitstream-type1
 apk add font-xfree86-type1 font-cronyx-cyrillic font-misc-cyrillic font-croscore font-noto
 apk add gst-plugins-ugly gst-plugins-ugly0.10 gst-plugins-bad gst-plugins-bad0.10
-apk add lxdm lxpolkit lxsession openbox-doc xdg-utils 
+
+apk del lxpolkit
+apk add lxdm lxsession openbox-doc xdg-utils 
 apk add faenza-icon-theme
 ```
 
 ## Escritorio internet y redes
 
 ```
+apk add wpa_supplicant
+rc-update add wpa_supplicant default
+rc-service wpa_supplicant start
+apk add modemmanager networkmanager network-manager-applet network-manager-applet-doc networkmanager-doc
+rc-update add networkmanager default
+rc-service networkmanager start
 apk add pidgin pidgin-doc 
 apk add gigolo firefox-esr
 ```
