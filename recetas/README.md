@@ -3,6 +3,10 @@ Este indice le instruira en guias para poder poner a punto el Alpine
 ya que la documentacion es ausente y de paso solo en ingles, 
 es un directorio de guias para llegar a poner Alpine como escritorio de uso:
 
+En alpine los programas se instalan desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
+igual es con los paquetes, estos no estan en su sistema, si no tiene internet se puede descargar todos 
+en un directorio y instalar desde alli con una simple linea
+
 1. Instalaciones: [../instalar/README.md](../instalar/README.md)
 2. Escritorio multimedia XFCE4 paso a paso: [programas-escritorio-xfce4-uso-general.md](programas-escritorio-xfce4-uso-general.md)
 3. Guia de comandos para escritorio openbox y devel: [programas-esenciales-todo-en-uno.md](programas-esenciales-todo-en-uno.md)
