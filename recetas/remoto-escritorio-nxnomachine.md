@@ -5,19 +5,19 @@
 
 Tener instalado como minimo:
 
+* linuxutils: `apk add wget attr coreutils grep util-linux pciutils usbutils binutils lsof less curl`
 * xorg: `apk add udev gtkglext pango atk cairo gdk-pixbuf mesa-gl libxcb libxrandr libxv libxxf86vm libxxf86misc libxmu`
 * desktop: `apk add lxdm openbox` (instalar aqui el que guste pero debe haber uno que defina `DESKTOP_SESSION`)
 * awk: `apk add gawk`
-* usb: `modprobe vhci-hcd; apk add linux-headers`
+* usb: `modprobe vhci-hcd; apk add linux-headers linux-vanilla-dev build-base linux-virt-dev`
 * pam: `apk add linux-pam`
 * gcc: `apk add gcc gcc-objc gcc-gnat gcc-doc g++`
-* 
+* automake: `apk add make m4 automake autoconf bison flex flex-libs`
+* crypo: `openssl openssl graphviz-dev nettle-dev`
 
 ### Descargar nomachine
 
 ```
-apk add wget attr coreutils grep util-linux pciutils usbutils binutils lsof less curl
-
 wget https://download.nomachine.com/download/6.4/Linux/nomachine_6.4.6_1_i686.tar.gz
 tar -C /usr/ -xzf nomachine_6.4.6_1_i686.tar.gz
 ```
