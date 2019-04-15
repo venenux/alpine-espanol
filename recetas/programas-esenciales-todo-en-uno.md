@@ -1,4 +1,3 @@
-
 Esto es escritorio, no servidor, en escritorio se necesita de todo, la seguridad es solo 
 en dos lugares, el naveador y el ssh (ya que no montaremos ningun sistema web como servicio mas que desarrollar).
 
@@ -164,7 +163,6 @@ para las voodoo usar `xf86-video-tdfx` pero no tendra 3d porque glidelibs no com
 # Escritorios graficos
 --------------------------
 
-
 ## Paquetes base graficos
 
 ```
@@ -212,6 +210,44 @@ apk add gst-plugins-ugly gst-plugins-ugly0.10 gst-plugins-bad gst-plugins-bad0.1
 apk del lxpolkit
 apk add lxdm lxsession openbox-doc xdg-utils 
 apk add faenza-icon-theme
+
+cat > /home/*/.Xresources << EOF
+Xft.antialias: 0
+Xft.rgba:      rgb
+Xft.autohint:  0
+Xft.hinting:   1
+Xft.hintstyle: hintslight
+EOF
+
+cat > /home/*/.gtkrc-2.0 << EOF
+gtk-theme-name="Mist"
+gtk-icon-theme-name="Faenza"
+gtk-cursor-theme-name="DMZ-White"
+gtk-cursor-theme-size=0
+gtk-toolbar-style=GTK_TOOLBAR_ICONS
+gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
+gtk-button-images=1
+gtk-menu-images=1
+gtk-enable-event-sounds=0
+gtk-enable-input-feedback-sounds=0
+gtk-xft-antialias=0
+gtk-xft-hinting=0
+gtk-xft-rgba="rgb"
+
+cat > /home/*/.config/gtk-3.0/settings.ini << EOF
+gtk-theme-name="Mist"
+gtk-icon-theme-name="Faenza"
+gtk-cursor-theme-name="DMZ-White"
+gtk-cursor-theme-size=0
+gtk-toolbar-style=GTK_TOOLBAR_ICONS
+gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
+gtk-button-images=1
+gtk-menu-images=1
+gtk-enable-event-sounds=0
+gtk-enable-input-feedback-sounds=0
+gtk-xft-antialias=0
+gtk-xft-hinting=0
+gtk-xft-rgba="rgb"
 ```
 
 ## Escritorio internet y redes
