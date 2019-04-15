@@ -15,3 +15,7 @@ se recomienda Debian etch/lenny con los paquetes tuneados de VenenuX sari sari.
 ## Tabla de versiones Alpine y sus caracteristicas
 
 (WIP) listado de cuadno se introdujo ciertos combos de paquetes ejemplo minetes, php7, qt5 etc
+
+## Recetas hardware/maquinas especificas
+
+[README.md](README.md)
