@@ -37,6 +37,12 @@ como los cambios estan en base de datos los cambios se notan en el momento de re
 Al no tener o tomar en cuenta que hay mas de uan instancia de base de datos a la cual 
 escribir los valores de `asterisk` este no puede funcionar en un entorno balanceado.
 
+## Redes y servicios
+
+Dado este documento es para poder compenetrarse con kamailio y asterisk, hay que **aclarar que 
+el Kamailio es un artefacto mas de *Redes Class 4* con trabajos del tipo ‘enrutamiento’ mientras 
+que ASterisk es artefacto de *Redes Class 5* considerado como servicio de suscriptores…**
+
 # Introduccion a VoIP
 
 **VoIP**, (Voice over IP o Voz sobre IP por sus siglas en ingles) es el **mundo y estandares** que 
