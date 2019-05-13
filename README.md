@@ -2,7 +2,8 @@ https://mckayemu.github.io/alpineinstalls/
 
 # alpineinstalls
 
-**Sitio en español para la experiencia usuario con alpine. ** 
+**Sitio en español para la experiencia usuario con alpine.** 
+
 Esto se enfoca solo en escritorio, multimedia, ya que para servidores un verdadero linuxero sabra que hacer..
 La razon es obvia, si quiero un servidor monto "yerro" en un AWS, ahora para maquinas viejas 
 si no arranca un escritorio es ilogico porque como haces que otra persona te ayude?.
