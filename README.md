@@ -34,7 +34,8 @@ Para mejores u/o otras combinaciones de instalacion leer [instalar/README.md](in
 ### Instalar programas
 
 En alpine los programas se instalan desde la red, en archivos llamados "paquetes", 
-rapido y simple sin tantas dependencias a diferencia de otras linux.. 
+rapido y simple sin tantas dependencias a diferencia de otras linux..
+Si esta perdido se recomienda leer [recetas/comandos-iniciados.md](recetas/comandos-iniciados.md)) 
 
 Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md), 
 Receta rapida para listado de todos los programas recomendados: [recetas/programas-esenciales-todo-en-uno.md](recetas/programas-esenciales-todo-en-uno.md)

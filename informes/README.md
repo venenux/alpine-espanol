@@ -10,6 +10,7 @@ Se recuerda que se asume ya estas documentaciones:
 
 1. Instalaciones: [../instalar/README.md](../instalar/README.md)
 2. Escritorio multimedia: [../recetas/programas-escritorio-xfce4-uso-general.md](../recetas/programas-escritorio-xfce4-uso-general.md)
+3. Comandos utiles si esta perdido: [../recetas/comandos-iniciados.md](../recetas/comandos-iniciados.md)) 
 
 # Recetas y casos maquinas especificas:
 

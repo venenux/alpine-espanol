@@ -151,3 +151,4 @@ key_mgmt=NONE
 
 1. Instalarla: [../instalar/README.md](../instalar/README.md)
 2. Escritorio multimedia: [../recetas/programas-escritorio-xfce4-uso-general.md](../recetas/programas-escritorio-xfce4-uso-general.md)
+3. Comandos utiles si esta perdido: [../recetas/comandos-iniciados.md](../recetas/comandos-iniciados.md)) 

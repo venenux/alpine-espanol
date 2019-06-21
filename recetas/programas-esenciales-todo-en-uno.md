@@ -389,3 +389,4 @@ chroot /srv/debian/chroot-$debflav /bin/bash
 
 * [../README-md (indice)](../README-md)
 * [Informaciones y notas](../informes/)
+* [comandos-iniciados.md](comandos-iniciados.md)) 
