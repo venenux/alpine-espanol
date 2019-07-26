@@ -1,5 +1,7 @@
 # nxnomachine en alpine
 
+Este es un trabajo en progreso.. aun no se ha logrado terminar.. 
+se agradece colaboracion en el asunto.. 
 
 ### Requisitos
 

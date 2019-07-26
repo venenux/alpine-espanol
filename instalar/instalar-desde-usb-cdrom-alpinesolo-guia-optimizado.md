@@ -124,6 +124,7 @@ No usar ningun flag, solo el comando, despues de contestar "none" a las pregunta
 disco, ejecutar el configurador del disco para colocar lso archivos en el disco:
 
 ```
+mkdir -p /mnt/boot
 setup-disk -m sys /mnt
 ```
 

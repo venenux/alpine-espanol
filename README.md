@@ -2,7 +2,8 @@ https://mckayemu.github.io/alpineinstalls/
 
 # alpineinstalls
 
-**Sitio en español para la experiencia usuario con alpine** como consecuencia de su asquerosa wiki.
+**Sitio en español para la experiencia usuario con alpine.** 
+
 Esto se enfoca solo en escritorio, multimedia, ya que para servidores un verdadero linuxero sabra que hacer..
 La razon es obvia, si quiero un servidor monto "yerro" en un AWS, ahora para maquinas viejas 
 si no arranca un escritorio es ilogico porque como haces que otra persona te ayude?.
@@ -34,7 +35,8 @@ Para mejores u/o otras combinaciones de instalacion leer [instalar/README.md](in
 ### Instalar programas
 
 En alpine los programas se instalan desde la red, en archivos llamados "paquetes", 
-rapido y simple sin tantas dependencias a diferencia de otras linux.. 
+rapido y simple sin tantas dependencias a diferencia de otras linux..
+Si esta perdido se recomienda leer [recetas/comandos-iniciados.md](recetas/comandos-iniciados.md)) 
 
 Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md), 
 Receta rapida para listado de todos los programas recomendados: [recetas/programas-esenciales-todo-en-uno.md](recetas/programas-esenciales-todo-en-uno.md)
