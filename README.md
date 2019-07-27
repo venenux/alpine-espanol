@@ -4,11 +4,21 @@ https://mckayemu.github.io/alpineinstalls/
 
 **Sitio en español para la experiencia usuario con alpine.** 
 
-Esto se enfoca solo en escritorio, multimedia, ya que para servidores un verdadero linuxero sabra que hacer..
-La razon es obvia, si quiero un servidor monto "yerro" en un AWS, ahora para maquinas viejas 
-si no arranca un escritorio es ilogico porque como haces que otra persona te ayude?.
-**Por eso este sitio, en español, hacer arrancar un Alpine en esas maquinas y tener un escritorio decente, 
-y no esas carcachas que hay que hacer malabares para poder usar la wifi, algo que con dos click hasta una cucaracha hace hoy dia!**
+Esto se enfoca en escritorio, multimedia, aunque tambien encontrara documentacion para servidores..
+
+La razon es obvia, revise el cuadro aqui a continuacion:
+
+### A que se parece alpine linux?
+
+| a que se parece | como usuario        | como desarollador | como linuxero         |
+| --------------- | ------------------- | ----------------- | --------------------- |
+| a un linux:     |     geento          |      archlinux    |    debian (pre sarge)     |
+| porque:         | es dificil y tecnico| anda a la moda    | hay que saber que se hace |
+
+Tal **como lo dice al web oficial de alpine, no se enfoca sino en contenedores y dispositivos de red**, 
+no es uan distro para uso comun ni diario, este sitio se enfoca en poder hacer eso documentado en español.
+
+### indice
 
 * [Inicio aqui: instalar alpine con varias recetas](#inicio)
 * [Despues instalar programas varios segun gusto](#instalar-programas)
@@ -17,7 +27,7 @@ y no esas carcachas que hay que hacer malabares para poder usar la wifi, algo qu
 * [El Porque debo usar Alpine](#el-porque-debo-usar-alpine)
   * **[Porque no deberia usarla](#porque-no-deberia-usarla)**
 * [Aclaratorias ventajas y deficiencias](#aclaratorias-ventajas-y-deficiencias)
-* [Comunidad Alpine español](#comunidad)
+* [Comunidad Alpine español](#comunidad-en-espaniol)
   * [Como contribuir a esta documentacion](#como-contribuir-a-esta-documentacion)
 
 ### Inicio:
@@ -79,7 +89,7 @@ Sep, es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero 
 **IMPORTANTE** esta ultima es importante, es un requisito imprescindible para ser windoser. Sin 
 embargo las dos primeras ya coartan demasiado esta "¿distro?" perdon.. proyecto opensource...
 
-# Comunidad
+# Comunidad en espaniol
 
 * Lista de correo: https://groups.google.com/forum/m/#!forum/venenuxsarisari
 * Indice de paquetes "bien hechos": (WIP), lo siento eso de "comunity" tiene muucha basura...
