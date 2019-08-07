@@ -20,6 +20,10 @@ este documento tambien particiona customizado usando optimizacion y MBR del disc
 Este documento asume tiene un discoduro pero sin usb o cdrom, y particionado, para adicional tener Alpine, 
 pero se modificara para usar Grub desde el mismo Alpine y sera Alpine quien comande el arranque, 
 este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
+6. [instalar-desde-debian-internet-alpine-chroot-directorio-directorio.md](instalar-desde-debian-internet-alpine-chroot-directorio-directorio.md) 
+Este documento permite usar Alpine dentro de otro linux, lo instala desde un linux ya instalado, 
+en este caso Debian (o similares) pero tambien hay otros documentos similares para otros sistemas.
+Si depende de un linux mas orientado a escritorio esta es la mejor opcion donde se asume un solo disco duro.
 
 **SOPORTE UEFI** este esta soportado experimentalmente desde alpine 3.6 sin embargo requiere grub 
 sino ocurren algunos fallos en arranque. Esto fue corroborado en una DELL r15 Inspiron con discrete 8 nucleos.
