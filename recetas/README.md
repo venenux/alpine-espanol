@@ -10,6 +10,7 @@ en un directorio y instalar desde alli con una simple linea
 1. Instalaciones: [../instalar/README.md](../instalar/README.md)
 2. Escritorio multimedia XFCE4 paso a paso: [programas-escritorio-xfce4-uso-general.md](programas-escritorio-xfce4-uso-general.md)
 3. Guia de comandos para escritorio openbox y devel: [programas-esenciales-todo-en-uno.md](programas-esenciales-todo-en-uno.md)
+4. Diferencias para comandos y administracion en [../documentos/diferencias-entre-linux.md](../documentos/diferencias-entre-linux.md) 
 
 # Vease tambien
 

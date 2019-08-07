@@ -13,6 +13,9 @@ esta muy al dia inclusive en versiones viejas como `3.6` y `3.7`.** Por ejemplo
 
 En este indice encontrara:
 
+* "Diferencias para comandos y administracion" en [diferencias-entre-linux.md](diferencias-entre-linux.md) 
+ya que alpine por el busybox, sino se le indica difiere en el uso de los comandos y aqui se da conocer porque.
+
 * "Como montar un LAMP stock" en [alpine-lamp-recetario.md](alpine-lamp-recetario.md) 
 lo que llaman "linux + `apache` + `mysql` + `php`" esta aqui todo explicado.
 
@@ -34,3 +37,9 @@ para aquellos que desean montar `kamailio` + `asterisk` en modo tiempo real para
 
 * "Configurar el poderoso COURIER mail service" en [alpine-courier-mailservice.md](alpine-courier-mailservice.md) 
 porque esos estupidos posfix+dovecot+mysql es para las maricas.
+
+
+# Vease tambien
+
+* Indice general [../README.md](../README.md)
+* Instalaciones: [../instalar/README.md](../instalar/README.md)

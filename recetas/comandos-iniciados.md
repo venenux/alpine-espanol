@@ -29,7 +29,7 @@ Comandos utiles si esta perdido
 
 | tipo     | en sysvinit | en systemd | ejemplo |
 | -------- | ----------- | ---------- | ------- |
-| ethernet | eth         | em         | eth0    |
+| ethernet | eth         | en         | eth0    |
 | serial/slip | slip     | sl         | slip0   |
 | inalambr | wlan        | wl         | wlan0   |
 | wan inalam | wwan      | ww         | wwan0   |
