@@ -4,19 +4,30 @@ https://mckayemu.github.io/alpineinstalls/
 
 **Sitio en español para la experiencia usuario con alpine.** 
 
-Esto se enfoca solo en escritorio, multimedia, ya que para servidores un verdadero linuxero sabra que hacer..
-La razon es obvia, si quiero un servidor monto "yerro" en un AWS, ahora para maquinas viejas 
-si no arranca un escritorio es ilogico porque como haces que otra persona te ayude?.
-**Por eso este sitio, en español, hacer arrancar un Alpine en esas maquinas y tener un escritorio decente, 
-y no esas carcachas que hay que hacer malabares para poder usar la wifi, algo que con dos click hasta una cucaracha hace hoy dia!**
+Esto se enfoca en escritorio, multimedia, aunque tambien encontrara documentacion para servidores..
+
+La razon es obvia, revise el cuadro aqui a continuacion:
+
+### A que se parece alpine linux?
+
+| a que se parece | como usuario        | como desarollador | como linuxero         |
+| --------------- | ------------------- | ----------------- | --------------------- |
+| a un linux:     |     geento          |      archlinux    |    debian (pre sarge)     |
+| porque:         | es dificil y tecnico| anda a la moda    | hay que saber que se hace |
+
+Tal **como lo dice al web oficial de alpine, no se enfoca sino en contenedores y dispositivos de red**, 
+no es uan distro para uso comun ni diario, este sitio se enfoca en poder hacer eso documentado en español.
+
+### indice
 
 * [Inicio aqui: instalar alpine con varias recetas](#inicio)
 * [Despues instalar programas varios segun gusto](#instalar-programas)
   * [Que version me conviene y en que hardware???](#que-version-me-conviene-para-que-hardware)
+  * [Casos de uso en distintas maquinas especificas](#instalaciones-en-distintas-maquina-especificas)
 * [El Porque debo usar Alpine](#el-porque-debo-usar-alpine)
-  * [Porque no deberia usarla](#porque-no-deberia-usarla)
+  * **[Porque no deberia usarla](#porque-no-deberia-usarla)**
 * [Aclaratorias ventajas y deficiencias](#aclaratorias-ventajas-y-deficiencias)
-* [Comunidad Alpine español](#comunidad)
+* [Comunidad Alpine español](#comunidad-en-espaniol)
   * [Como contribuir a esta documentacion](#como-contribuir-a-esta-documentacion)
 
 ### Inicio:
@@ -40,19 +51,26 @@ Si esta perdido se recomienda leer [recetas/comandos-iniciados.md](recetas/coman
 Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md), 
 Receta rapida para listado de todos los programas recomendados: [recetas/programas-esenciales-todo-en-uno.md](recetas/programas-esenciales-todo-en-uno.md)
 
-### QUE VERSION ME CONVIENE PARA QUE HARDWARE
+# QUE VERSION ME CONVIENE PARA QUE HARDWARE
 
-**Alpine no es un distro de uso general, y no ha sido probada en muchas maquinas, sin embargo:** 
+Alpine no es un distro de uso general, y **no ha sido probada en muchas maquinas,** 
 basado en las trazas de internet, los kernel news y los alpine bugs, se construye una 
 muy acertada y obvia tabla de soporte y que soluciones (versiones de alpine) emplear.
 
 Para mayor informacion consultar la tabla de hardware y alpines recomendados:
 * [informes/hardware-y-versiones-alpine-recomendados.md](informes/hardware-y-versiones-alpine-recomendados.md)
 
-> No pero yo tengo Alpine isntalado en mi Pemtium 3 y funciona bien
+> No pero yo tengo Alpine instalado en mi Pemtium 4 y funciona bien
 
-Falso: desde kernel 4 el soporte de video intel Opengl quedo deprecated para estos chipset (i810/i815) 
+Falso: desde kernel 4 el soporte de video intel Opengl quedo deprecated para estos chipset (i810/i845) 
 la solucion es instalar Alpine 3.2 que tiene kernel 3.X y aun soporte bien maquinas viejas.
+
+## Instalaciones en distintas Maquinas Especificas
+
+Recetas especificas para marcas o modelos de computadores, HP, DELL, IBM, Intel classmates/canaimitas, 
+consultelo en su index, no es como debian pero hay bastantes:
+
+* [informes/README.md](informes/README.md)
 
 # El Porque debo usar Alpine
 
@@ -62,16 +80,16 @@ la solucion es instalar Alpine 3.2 que tiene kernel 3.X y aun soporte bien maqui
 
 Sep, es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero rapida.. que se le va hacer.**
 
-#### Porque no deberia usarla
+## Porque no deberia usarla
 
-* Ningun programa profesional lejos del mundito linux sirve, ni `nomachine`, ni `oracle`, etc...
-* Porque es innecesariamente complicada, poco intuitiva, y retrograda en un mundo moderno.. y con creses!
-* **Y LA MAS IMPORTANTE: Porque soy un winloser ignorate y me gustar hacer las cosas con dos click, 
-para seguir flajelandome cada vez el tecnico cobre** que jode para seguir dejando lenta la pc
+* Nada profesional sirve, ni `nomachine`, **ni `oracle`**, ni `anydesk`, pero si eclipse y netbeans...
+* Porque es **innecesariamente complicada, no intuitiva, y retrograda en un mundo moderno..** y con creses!
+* Y porque seguro **algunos windosers ignorate gustan hacer las cosas con dos click en linux**..
 
-**IMPORTANTE** esta ultima es importante, es un requisito imprescindible para ser windoser.
+**IMPORTANTE** esta ultima es importante, es un requisito imprescindible para ser windoser. Sin 
+embargo las dos primeras ya coartan demasiado esta "¿distro?" perdon.. proyecto opensource...
 
-# Comunidad
+# Comunidad en espaniol
 
 * Lista de correo: https://groups.google.com/forum/m/#!forum/venenuxsarisari
 * Indice de paquetes "bien hechos": (WIP), lo siento eso de "comunity" tiene muucha basura...
@@ -97,7 +115,7 @@ ya que no es una distro extremadamente usada no se cubren todos los casos de uso
 mucha mayor rapidez tambine es un dolor de cabeza, ya que imposibilita tener otros idiomas 
 configurados de manera dual ademas de imposibilitar compilar mcuhos programas, muchos 
 no asuma que todo compilara comoud cree conocer, esto no es Winbuntu.. debera leer.
-2. **El boot manager es syslinux** no asuma es igual a otras distros, syslinux es mas 
+2. **El boot manager es syslinux hasta la 3.8** esto al fin lo mejoraron en 3.9, syslinux es mas 
 rapido que Grub pero mas delicado, puesto en cada modificacion debe volver escribirse el MBR. 
 Cabe destacar que para dual boot es recomendable usar el directorio `/etc/update-extlinux.d/` 
 mediante la colocacion de archivos ".conf" se puede usar numeros para ello, la sintaxis debe 
@@ -117,5 +135,3 @@ debe tener cuidado al actualizar, porque puede que su hardware o su configuracio
 de funcionar repentinamente, al no ser como Debian esto es lo normal en este tipo de 
 distribuciones.. con la unica ventaja que esta siempre al dia pero no garantiza unicidad.
 
-
-# Como contribuir a esta documentacion

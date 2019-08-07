@@ -29,6 +29,9 @@ empleando los paquetes conocidos desde el repositorio sin complicarse con filtra
 
 Todo lo anterior es para jevitas, aqui esta la cosa buena:
 
+* Gestor de proyectos Redmine en [redmine-en-alpine.md](redmine-en-alpine.md), un entorno completisimo, 
+similar a gitlab y github pero que soporta SVN, GIT, etc ademas su sistema wiki es mas avanzado usando macros.
+
 * "Poderosisimo avanzado HTTP entry" en [alpine-http-avanzado.md](alpine-http-avanzado.md) 
 a diferencia montara `lighttpd` + `mariadb` + `php` y si necesita `apache`, aprendera del poderosisimo "proxy-reverse".
 
