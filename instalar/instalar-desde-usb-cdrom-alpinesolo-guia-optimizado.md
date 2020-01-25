@@ -91,6 +91,7 @@ destino que se usara. Para esto formateamos, montamos y ejecutamos indicacion:
 apk add e2fsprogs
 mkfs.ext3 /dev/sda1 -L alp1root -b 2048
 mount -t ext3 /dev/sda1 /mnt
+mkdir -p /mnt/boot
 ```
 
 Esto dejara el disco alli pendiente, el instalador le indicaremos no usarlo para despues, reconfigurar que se usara.
@@ -117,27 +118,46 @@ la configuracion customizada de disco.
 
 
 ```
-setup-alpine
+cat > /root/autofile << EOF
+KEYMAPOPTS="es es-winkeys"
+HOSTNAMEOPTS="-n alpine-test"
+DNSOPTS="8.8.8.8"
+TIMEZONEOPTS="-z UTC"
+PROXYOPTS="none"
+APKREPOSOPTS="-1"
+SSHDOPTS="-c openssh"
+NTPOPTS="-c chrony"
+EOF
+
+export DEFAULT_DISK=none
+
+setup-alpine -f /root/autofile
 ```
 
 No usar ningun flag, solo el comando, despues de contestar "none" a las preguntas sobre el 
-disco, ejecutar el configurador del disco para colocar lso archivos en el disco:
+disco, ejecutar el configurador del disco para colocar lso archivos en el disco; 
+ojo **recuerde escoger "none" a la pregunta que disco usar**, 
+ademas **recordemos debe estar montada en `/mnt` como hicimos** anteriormente:
 
 ```
-mkdir -p /mnt/boot
 setup-disk -m sys /mnt
 ```
 
 Esto copiara el sistema al disco pero recordemos tenemos el sistema en una sola particion 
 y alpine es marico con eso, asi que hay que ajustarlo en el bootmanager config asi:
 
-```
-apk add nano
-nano /mnt/boot/extlinux.conf
-```
-
 A los parametros `KERNEL` y `APPEND` hay que indicar es desde el directorio `/boot/` 
 del disco iniciado adicionando en "KERNEL y agregando en "APPEND" en el parametro "initrd".
+Despues, si se usa `BOOTLOADER=syslinux` o no se usa grub, se copia al mbr 
+el bootloader de syslinux:
+
+```
+sed -s -i -r 's|KERNEL /vmlinuz|KERNEL /boot/vmlinuz|g' /mnt/boot/extlinux.conf
+sed -s -i -r 's|INITRD /initramfs|INITRD /boot/initramfs|g' /mnt/boot/extlinux.conf
+
+dd if=/usr/share/syslinux/mbr.bin of=/dev/sda
+```
+
 En las imagenes se muestra todos estos, usar como referencia.
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png)

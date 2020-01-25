@@ -88,6 +88,7 @@ destino que se usara. Para esto formateamos, montamos y ejecutamos indicacion:
 apk add e2fsprogs
 mkfs.ext3 /dev/sda1 -L alp1root -b 2048
 mount -t ext3 /dev/sda1 /mnt
+mkdir /mnt/boot
 ```
 
 Esto dejara el disco alli pendiente, el instalador le indicaremos no usarlo para despues, reconfigurar que se usara.
@@ -142,7 +143,20 @@ es arrancar este linux en modo chroot y desde el mismo instalar/actualizar su ma
 
 ## Actualizar el arranque desde particion Linux otra
 
-(WIP) necesita chroot en el modo install y actualmente da problemas...
+A los parametros `KERNEL` y `APPEND` hay que indicar es desde el directorio `/boot/` 
+del disco iniciado adicionando en "KERNEL y agregando en "APPEND" en el parametro "initrd".
+Despues, si se usa `BOOTLOADER=syslinux` o no se usa grub, se copia al mbr 
+el bootloader de syslinux>
+
+```
+sed -s -i -r 's|KERNEL /vmlinuz|KERNEL /boot/vmlinuz|g' /mnt/boot/extlinux.conf
+sed -s -i -r 's|INITRD /initramfs|INITRD /boot/initramfs|g' /mnt/boot/extlinux.conf
+
+dd if=/usr/share/syslinux/mbr.bin of=/dev/sda
+```
+
+En las imagenes se muestra todos estos, usar como referencia.
+
 
 ## Actualizar el arranque desde particion Debian
 

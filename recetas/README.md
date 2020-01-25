@@ -3,6 +3,8 @@ Este indice le instruira en guias para poder poner a punto el Alpine
 ya que la documentacion es ausente y de paso solo en ingles, 
 es un directorio de guias para llegar a poner Alpine como escritorio de uso:
 
+* [Guia principal de instalacion para novatos: alpine-install-pc-bios-mode.md](alpine-install-pc-bios-mode.md)
+
 En alpine los programas se instalan desde la red, pienselo, aunque compre un CD este no esta en su sistema, 
 igual es con los paquetes, estos no estan en su sistema, si no tiene internet se puede descargar todos 
 en un directorio y instalar desde alli con una simple linea
