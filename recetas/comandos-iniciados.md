@@ -42,7 +42,35 @@ Comandos utiles si esta perdido
 
 ### configurar un dispositivo de red ###
 
-pendiente
+Redes cableadas:
+
+```
+cat > /etc/network/interfaces << EOF
+auto lo
+iface lo inet loopback
+EOF
+
+setup-interfaces -a
+
+echo -e "\n" | setup-dns 8.8.8.8
+
+rc-service networking restart
+```
+
+Redes inalambricas de casa:
+
+WIP
+
+### activar los repositorios
+
+```
+cat > /etc/apk/repositories << EOF
+http://mirror.math.princeton.edu/pub/alpinelinux/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://mirror.math.princeton.edu/pub/alpinelinux/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+
+apk update
+```
 
 
 discos
@@ -62,6 +90,19 @@ discos
 | SATA     | sd     | sda,sda1 |
 
 **NOTA** siendo RAID o LVM, el disco es detectado despuea que el RAID o LVM este inicializado.
+
+## Ajustar el syslinux bootloader despeus de instalar en una sola particion
+
+Esto asumiendo que "sda" es el disco duro y "sda1" es la particion unica usada, 
+y esta particion "sda1" es donde se instalo previamente montada en "/mnt":
+
+```
+sed -s -i -r 's|KERNEL /vmlinuz|KERNEL /boot/vmlinuz|g' /mnt/boot/extlinux.conf
+sed -s -i -r 's|INITRD /initramfs|INITRD /boot/initramfs|g' /mnt/boot/extlinux.conf
+
+dd if=/usr/share/syslinux/mbr.bin of=/dev/sda
+```
+
 
 
 # Vease tambien:
