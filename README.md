@@ -39,10 +39,10 @@ Para mejores u/o **otras combinaciones de instalacion leer [instalar/README.md](
 ## Instalar programas y recetas
 
 En alpine los programas se instalan desde la red, y son llamados "paquetes", 
-y dependen del entorno de uso que puede ser [consola de solo letras con el documento alpine-recetas-configuracion-y-paquetes-sistema.md](alpine-recetas-configuracion-y-paquetes-sistema.md) 
-o puede usar [los graficos y escritorio de trabajo con el documento alpine-recetas-configuracion-entorno-grafico-y-escritorio.md](alpine-recetas-configuracion-entorno-grafico-y-escritorio.md)
+y dependen del entorno de uso que puede ser [consola de solo letras con el documento recetas/alpine-recetas-configuracion-y-paquetes-sistema.md](recetas/alpine-recetas-configuracion-y-paquetes-sistema.md) 
+o puede usar [los graficos y escritorio de trabajo con el documento recetas/alpine-recetas-configuracion-entorno-grafico-y-escritorio.md](recetas/alpine-recetas-configuracion-entorno-grafico-y-escritorio.md)
 
-Si tiene dudas para los iniciados lease [alpine-recetas-configuracion-y-paquetes-sistema.md](alpine-recetas-configuracion-y-paquetes-sistema.md)
+Si tiene dudas para los iniciados lease [recetas/alpine-recetas-configuracion-y-paquetes-sistema.md](alpine-recetas-configuracion-y-paquetes-sistema.md)
 
 ### QUE VERSION ME CONVIENE PARA QUE HARDWARE
 

@@ -13,7 +13,7 @@ se podra colocar igual que si de un linux comun se tratase en la consola.
 Una vez realizado esto en este documento se puede configurar 
 [los graficos y escritorio de trabajo con el documento alpine-recetas-configuracion-entorno-grafico-y-escritorio.md](alpine-recetas-configuracion-entorno-grafico-y-escritorio.md)
 
-## Nuevos usuarios: nombre de host y conexión de red por cable
+## Nuevos usuarios: nombre, red y root
 
 #### nombre de la máquina
 
@@ -87,7 +87,7 @@ gran mayoria no se usan directamente y sonlos que vamos instalar.
 #### habilitar repositorio
 
 Los depósitos de paquetes o repositorios es de donde se obtienen programas
-del sistema, para despues obtner programas desde fuentes externas, ejecute:
+del sistema, para despues obtener programas desde fuentes externas, ejecute:
 
 ```
 cat > /etc/apk/repositories << EOF
