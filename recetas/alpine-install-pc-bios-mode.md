@@ -1,17 +1,17 @@
 
 Either way, this section describes, step by step, how to get 
 and install usage of main setup-* utilities, as well as explanations 
-for a complete install on a DELL VOSTRO common computer, 
-a DELL Vostro 230 was used specifically for this document:
+for a complete install on common computer BIOS or UEFI based, 
+the Grub loader supports EFI base and GPT partitions indexing, 
+a DELL Vostro 230 was used specifically for this document.
 
 # 0. Source media
 
-First download a source media, for computers only `x86` and `x86_64` 
-are valids images from https://alpinelinux.org/downloads/, the 
-recommended image are `extended` due comes with need tools 
-and only are 100Mb.
+First download a source media, from https://alpinelinux.org/downloads/, 
+all the images will need network internet connection except `extended` 
+due comes with minimal need packages but are x86 based only.
 
-For all users no cares from what operating system comes, 
+For all users no cares from what operating system comes or wicht architecture, 
 we recommended to use `balena-etcher-electron` of https://www.balena.io/etcher/ 
 for flashing USB drive from any system, of course you must be run 
 as root or admin user.
@@ -32,7 +32,10 @@ on respective drive bay of the computer and turn on the computer.
 
 Select proper boot media, on DELL Vostro always are the `F12` key, press 
 at the boot "Dell" screen and when menu shows select the proper media, 
-in this case USB drive was used, rest of this document makes no sense which media was used.
+on the VirtualBox software are same `F12` key too, by hitting that key 
+a boot selection media will be displayed, boot screen depends on each computer; 
+in this case USB drive was used, 
+rest of this document makes no sense which media was used.
 
 ## 1.1. Installation from scrat
 
@@ -63,6 +66,9 @@ export BOOTLOADER=grub
 setup-alpine -f /root/autofile
 ```
 
+Be care of the network questions and root password questions in the 
+process due will be used later and must be mandatory.
+
 This will make the disk layout as:
 
 * `/dev/sda1` como BOOT en 500Mb en `/boot`
@@ -90,40 +96,39 @@ apk upgrade -a
 
 We need minimal important packages and setups for console and development, 
 also some specific settings for remote connection from others linux, 
-due today Alpine not have a good remote x11 connection that x11vnc.. 
+due today Alpine not have a good remote x11 software than x11vnc.. 
 
-The remote management cannot be done with root directly by default, due ssh 
-security, so we need to setup an remote connection account, we due VenenuX 
-guides compatibility called "daru" and only will be able to connect to made "su" 
-once connected:
+The most recommended it's having a access user here named "remote" 
+and normal general usage user here named "general" for convenience, 
+in the next commands we will setup a very hardened limited environment 
+for any new user and created those two users:
 
 ```
-adduser --uid 888 --home /opt/daru --shell /bin/ash daru
+mkdir -p /etc/skel/
 
-rm /opt/daru/*
-
-cat > /opt/daru/.logout << EOF
+cat > /etc/skel/.logout << EOF
 history -c
-/bin/rm -f /opt/daru/.mysql_history
-/bin/rm -f /opt/daru/.history
-/bin/rm -f /opt/daru/.bash_history
+/bin/rm -f /opt/remote/.mysql_history
+/bin/rm -f /opt/remote/.history
+/bin/rm -f /opt/remote/.bash_history
 EOF
 
-cat > /opt/daru/.cshrc << EOF
-unsetenv DISPLAY
+cat > /etc/skel/.cshrc << EOF
 set autologout = 30
 set prompt = "$ "
 set history = 0
 set ignoreeof
 EOF
 
-cat > /opt/daru/.bashrc << EOF
-unsetenv DISPLAY
-set autologout = 30
-set prompt = "$ "
-set history = 0
-set ignoreeof
-EOF
+cp /etc/skel/.cshrc /etc/skel/.profile
+
+adduser -D --home /opt/remote --shell /bin/ash remote
+
+echo "secret_new_remote_user_password" | chpasswd
+
+adduser -D --shell /bin/bash general
+
+echo "secret_new_general_user_password" | chpasswd
 ```
 
 Before this if you have wired connection internet, we need to setup 
@@ -142,29 +147,55 @@ echo -e "\n" | setup-dns 8.8.8.8
 rc-service networking restart
 ```
 
-Now we need to added normal repositories, donot use edge or testing, 
-due we will setup all for stable usage adn daily use:
+Now we need to added normal repositories, do not use edge or testing, 
+due we will setup all for stable usage and daily use:
 
 ```
 cat > /etc/apk/repositories << EOF
 http://mirror.math.princeton.edu/pub/alpinelinux/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
 http://mirror.math.princeton.edu/pub/alpinelinux/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
 EOF
 
 apk update
 ```
 
-now that repositories are set, we sill added minimal set of packages 
-to provide similar behaviour of other linuxes:
+Now that repositories are set, we still need to property configure root, 
+added minimal set of packages to provide similar behavior of other linuxes, 
+and install some others need tools:
 
 ```
-apk add attr dialog dialog-doc bash bash-doc bash-completion grep grep-doc
+cat > /root/.cshrc << EOF
+unsetenv DISPLAY || true
+HISTCONTROL=ignoreboth
+EOF
 
-apk add util-linux util-linux-doc pciutils usbutils binutils findutils readline
+cp -f /root/.cshrc /root/.profile
+
+apk del dropbear
+
+apk add openssh openssh-doc readline readline-doc
 
 apk add man man-pages lsof lsof-doc less less-doc nano nano-doc curl curl-doc
+
+apk add attr dialog dialog-doc bash bash-doc bash-completion grep grep-doc
+
+apk add util-linux pciutils usbutils binutils findutils readline
+
+apk add util-linux-doc pciutils-doc usbutils-doc binutils-doc findutils-doc
 
 export PAGER=less
 ```
 
+Now at this point we have a console linux (no desktop graphical session) ready, 
+each console can be access with hitting at same time keys `Ctrl`+`Alt`+`FX` 
+where `X` can be 1 to 6 as we already know as function keys, by example, 
+if we hit `Ctrl+Alt+F3` we will see a TTY3 console with "login" prompt; 
+where can input the username and later after hit enter input the user password, 
+if both are correrct a linux console prompt will display with `$` symbol 
+ready to receive commands inputs.
 
+# que hacer despeus de instalar:
+
+Lease [Receta despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md).

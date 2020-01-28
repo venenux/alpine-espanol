@@ -11,7 +11,7 @@ https://mckayemu.github.io/alpineinstalls/
 | a un linux:     |     geento          |      archlinux      |        Devuan        |
 | porque es:      | dificil y tecnico   | anda a la moda      | hay que saber que se hace |
 
-Es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero rapida.. hace bien lo que debe hacer.**
+Es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero rapida..**
 
 ## Indice
 
@@ -26,23 +26,23 @@ Es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero rapid
 
 ## Inicio:
 
-Alpine permite instalar desde disco, usb, o red, en las dos primeras usa una imagen arrancable mientras 
-que en la tercera se necesita una imagen dumpeada o un Alpine desde otra maquina. Por facilidad, 
-asumiremos es la primera vez y asumiremos las dos primeras:
+Alpine permite instalar desde disco, usb, o red, en las dos primeras usa 
+una imagen arrancable mientras que en la tercera se necesita una clonacion
+dumpeada o un Alpine desde otra maquina. Por facilidad, se recomienda las 
+primeras dado son las mas conocidas y faciles de entender.
 
-[instalar/instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md](instalar/instalar-desde-cdrom-usb-a-discoreal-dualboot-guia.md)
-instalacion ejemplo sin borrar su antiguo linux, con algunas fotos para arranque de dos instalaciones, 
-este documento tambien particiona customizado usando optimizacion y MBR del disco en vez de UEFI.
+En el documento [instalar/instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md](instalar/instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md)
+se emplea una maquina virtual, ideal para su computador si quiere probar.
 
 Para mejores u/o **otras combinaciones de instalacion leer [instalar/README.md](instalar/README.md)**
 
 ## Instalar programas y recetas
 
-En alpine los programas se instalan desde la red, en archivos llamados "paquetes", 
+En alpine los programas se instalan desde la red, y son llamados "paquetes", 
+y dependen del entorno de uso que puede ser [consola de solo letras con el documento alpine-recetas-configuracion-y-paquetes-sistema.md](alpine-recetas-configuracion-y-paquetes-sistema.md) 
+o puede usar [los graficos y escritorio de trabajo con el documento alpine-recetas-configuracion-entorno-grafico-y-escritorio.md](alpine-recetas-configuracion-entorno-grafico-y-escritorio.md)
 
-Para las recetas de escritorios, programs y demas, leer [recetas/README.md](recetas/README.md), 
-
-Receta listado de programas recomendados: [recetas/programas-esenciales-todo-en-uno.md](recetas/programas-esenciales-todo-en-uno.md)
+Si tiene dudas para los iniciados lease [alpine-recetas-configuracion-y-paquetes-sistema.md](alpine-recetas-configuracion-y-paquetes-sistema.md)
 
 ### QUE VERSION ME CONVIENE PARA QUE HARDWARE
 
@@ -80,8 +80,9 @@ Alpine linux es la distro con escritorio mas rapida del planeta y de la historia
 
 # Aclaratorias, ventajas y deficiencias
 
-Es importante que **para algunos que se creen expertos linux Alpine es para machos y les dara una bofetada**, 
-sin embargo difiere y tiene algunas ventajas como desventajas asi como cambios respectos otras distros.
+Es importante que **para algunos que se creen expertos: linux Alpine es para machos 
+y les dara una bofetada**, sin embargo difiere y tiene algunas ventajas 
+como desventajas asi como cambios respectos otras distros.
 
 Tal **como lo dice al web oficial de alpine, no se enfoca sino en contenedores y dispositivos de red**, 
 no es uan distro para uso comun ni diario, este sitio se enfoca en poder hacer eso documentado en español.
@@ -97,23 +98,15 @@ Las controversias sobre si es para uso diario viene dado por las dos mas grandes
 el uso de musc libc y el que es minimalista, teniendo en su principal repositorio solo paquetes servicios 
 el que empaqueta es solo a manera de colaboracion y cuando no es experto suceden incompatibilidades.
 
-1. **La libreria central de C es musc libc** es la principal diferencia, si bien permite 
-mucha mayor rapidez tambien es un dolor de cabeza, ya que imposibilita tener otros idiomas 
-configurados de manera dual ademas de imposibilitar compilar muchos programas, muchos 
-no asuma que todo compilara como ud cree conocer, esto no es Winbuntu.. debera leer!.
-2. **El boot manager es syslinux** por defecto, pero si tine UEFI automatico usara grub, 
-syslinux es mas delicado, puesto en cada modificacion debe volver escribirse el MBR. 
-en nuestros documentos no apoyaremos syslinux por ser delicado, complicar el soporte UEFI 
-y exigir escribir en el MBR en cada cambio por mas minimo que sea.
-3. **Para UEFI debe cambiar el bootmanager**, no se recomienda usar EFI/UEFI y desactivelo, 
-el soporte grub es bueno con el UEFI en Alpine desde la version 3.8.5, pero mejor es BIOS, 
-desactive el UEFI y mejor use particionamiente MBR en vez de GPT para evitar problemas. 
-Hoy dia el instalador soporta bien el UEFI y automaticamente usa grub desde Alpine 3.10.3.
-4. **Estilo rolling releases** asi que una nueva version de cualqueir programa, 
-debe tener cuidado al actualizar, porque puede que su hardware o su configuracion deje 
-de funcionar repentinamente, alpine linux tiene versiones estables, pero se limita a en 
-cada nueva version usar lo mas nuevo posible pero estable, un ejemplo es que mientras mas 
-nuevo menos soporte tiene su hardware viejo, como las intel pentium3 o las zoran viedo grabber.
+1. **La libreria central de C es musc libc** es la principal diferencia, 
+si bien permite mucha mayor rapidez tambien es un dolor de cabeza, ya que 
+imposibilita el ejecutar otros programs asi como software binario en totalildad.
+2. **El boot manager es syslinux** para BIOS y grub solo si detecta UEFI, 
+no hay documentacion de como usar grub especifica para el sistema, 
+solo la que estos documentos en español ofrecemos aqui.
+3. **Estable pero casi rolling release** se limita a usar lo mas nuevo, 
+y remueve sin estimar si afecta software de terceros, tal como se removio gtkglext 
+despoticamente, mientras mas nuevo menos soporte tiene su hardware.
 
 # Comunidad
 

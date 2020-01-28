@@ -9,13 +9,16 @@ Este documento asume minimo Alpine 3.3 y maximo alpine 3.9 para otras versiones 
 # habilitar repositorios
 ----------------------------------------
 
-`nano /etc/apk/repositories`
-
-descomentar el de comunity de la version especifica, no descomentar egde.
-
 **NOTA** versiones menores de Alpine a 3.2 no tiene repositorio comunidad.
 
 ```
+cat > /etc/apk/repositories << EOF
+http://mirror.math.princeton.edu/pub/alpinelinux/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://mirror.math.princeton.edu/pub/alpinelinux/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+
 apk update
 ```
 
@@ -28,18 +31,21 @@ apk update
 ```
 apk add linux-firmware
 
-apk add attr dialog dialog-doc bash bash-doc bash-completion coreutils coreutils-doc grep grep-doc
-apk add util-linux util-linux-doc pciutils usbutils binutils findutils readline
+apk add htop htop-doc links links-doc readline readline-doc
 apk add man man-pages lsof lsof-doc less less-doc nano nano-doc curl curl-doc
+apk add attr dialog dialog-doc bash bash-doc bash-completion grep grep-doc
+apk add util-linux pciutils usbutils binutils findutils readline
+apk add util-linux-doc pciutils-doc usbutils-doc binutils-doc findutils-doc
 export PAGER=less
 
-apk add python2 python3
+apk add python2 python3 python2-doc python3-doc
+apk pcre pcre-doc npth gmp gmp-doc
 
-apk add htop testdisk btrfs-progs-extra btrfs-progs-doc e2fsprogs-extra e2fsprogs-doc dosfstools dosfstools-doc
+apk add testdisk ntfs-3g ntfs-3g-doc btrfs-progs-extra btrfs-progs-doc e2fsprogs-extra e2fsprogs-doc dosfstools dosfstools-doc
 apk add imagemagick xorriso rsync antiword asciidoc wv wv-doc
 apk add aspell aspell-en aspell-ru aspell-de aspell-utils aspell-doc aspell-libs
 
-apk add cpufrequtils
+apk add cpufrequtils cpufrequtils-doc
 rc-service cpufrequtils start
 rc-update add cpufrequtils
 ```
@@ -56,11 +62,27 @@ apk add tar-doc zlib-doc xz-doc zip-doc p7zip-doc cpio-doc lha-doc sharutils-doc
 ## comunicacion e internet consola
 
 ```
-apk add wpa_supplicant
+apk add wpa_supplicant wpa_supplicant-doc gnutls gnutls-doc
 rc-update add wpa_supplicant default
 apk add irssi irssi-doc irssi-proxy fish weechat weechat-aspell weechat-lua weechat-python weechat-perl
 apk add aria2 wget wget-doc elinks elinks-doc macchanger macchanger-doc 
 ```
+
+# soporte de hardware
+
+Actualmente esto puede estar sujetyo a cambios ya que 
+los proyectos actuales deben abstraeer todo loq ue systemd ahora hace:
+
+## hot plug
+
+```
+apk parted parted-doc hdparm hdparm-doc wpa_supplicant wpa_supplicant-doc
+apk add eudev eudev-netifnames eudev-doc udisks2 udisks2-doc
+rc-update add udev
+rc-service udev start
+```
+
+
 
 # gestion remota
 
@@ -100,20 +122,22 @@ Para tener el entorno grafico y los programas graficos
 necesitamos el subsistema grafico, soporte 3d y configuracion de placa video:
 
 
-## Subsistema grafico
+## 1 - Subsistema grafico
 
 
 ```
-apk add eudev udisks2 udisks2-doc
-rc-update add udev
-rc-service udev start
-apk add xorg-server xorg-server-xephyr xf86-video-vesa xf86-video-intel xf86-input-evdev  xinit
-apk add xf86-input-mouse xf86-input-synaptics xf86-input-keyboard font-util font-util-doc fontconfig
+apk add xorg-server xorg-server-doc xorg-server-xephyr xorg-server-xnest xf86-video-vesa xf86-input-evdev  
+apk add xinit xf86-input-mouse xf86-input-synaptics xf86-input-keyboard font-util font-util-doc fontconfig
+
+apk add polkit-gnome-lang polkit-gnome-doc polkit-gnome
+
+apk add xf86-video-intel xf86-video-ati xf86-video-nouveau xf86-video-modesetting
+apk add xf86-video-nv xf86-video-tdfx xf86-video-sis xf86-video-s3 xf86-video-mga
 ```
 
-## Placas de video
+## 2 - Placas de video
 
-1). Debemos agregar soporte 3d asi sea falso, hoy dia la estupida dependencia lo exige:
+2.1). Debemos agregar soporte 3d asi sea falso, hoy dia la estupida dependencia lo exige:
 
 ```
 apk add glib libxcb libxrandr libxv libxxf86vm libxxf86misc libxmu xcb-util-cursor xcb-util-image xcb-util-keysyms
@@ -122,7 +146,7 @@ apk add libva libva-glx mesa mesa-gl mesa-egl mesa-gles mesa-gbm mesa-glapi mesa
 
 **NOTA** no instalar kbd si tiene laptop a menos que sepa lo que hace
 
-2). Despues segun al tarjeta/placa de video OJO mo mexclar los "mesa-dri-xxx":
+2.2). Despues segun al tarjeta/placa de video OJO mo mexclar los "mesa-dri-xxx":
 
 * Intel:
 
@@ -155,7 +179,7 @@ apk xf86-video-amdgpu xf86-video-openchrome xf86-video-s3 xf86-video-savage xf86
 para las voodoo usar `xf86-video-tdfx` pero no tendra 3d porque glidelibs no compila en alpine. (WIP)
 
 
-3). Y listo se ejecuta si el script correspondiente:
+2.3). Y listo se ejecuta si el script correspondiente:
 
 `setup-xorg-base`
 
@@ -168,9 +192,15 @@ para las voodoo usar `xf86-video-tdfx` pero no tendra 3d porque glidelibs no com
 ```
 apk add gtkglext pango atk cairo gdk-pixbuf gtk+2.0 gtk+3.0 wxgtk gtk-engines gtk-engines-industrial 
 apk add gtkmm atkmm pangomm cairomm gtkmm3 hicolor-icon-theme imagemagick-c++ imagemagick-libs ghostscript
-apk add shared-mime-info gtk-murrine-engine gtk-xfce-engine xrandr
+apk add shared-mime-info gtk-murrine-engine xrandr
 apk add ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-linux-libertine ttf-ubuntu-font-family
-apk add lxdm scrot
+apk add lxdm scrot scrot-doc
+
+apk add font-bitstream-75dpi font-bitstream-100dpi font-bitstream-type1
+apk add terminus-font ttf-inconsolata ttf-dejavu font-noto font-noto-extra ttf-font-awesome font-noto-extra
+apk add font-vollkorn font-misc-cyrillic font-mutt-misc font-screen-cyrillic font-winitzki-cyrillic font-cronyx-cyrillic
+apk add terminus-font font-noto font-noto-thai font-noto-tibetan font-sony-misc font-daewoo-misc font-jis-misc
+apk add font-isas-misc
 ```
 
 ## Multimedia sonido y video
@@ -188,11 +218,14 @@ apk add dvd+rw-tools cdparanoia cdrkit cdw
 apk add portaudio lame lame-doc vorbis-tools openal-soft optipng ffmpegthumbnailer wxgtk-media exiv2-doc exiftool
 apk add sdl sdl-doc sdl_image sdl_mixer sdl2 sdl2_image sdl2_mixer sdl2_ttf
 
+apk add asoundconf asoundconf-doc
+
 ```
 
 ## Escritorio LXDE y openbox
 
 ```
+apk add wpa_supplicant wpa_supplicant-gui
 apk add dbus dbus-x11 dbus-glib dhcpcd-dbus dbus-libs dbus-doc dbus-glib-doc
 rc-service dbus start
 rc-update add dbus
