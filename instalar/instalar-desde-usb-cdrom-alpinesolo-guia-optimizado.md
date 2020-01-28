@@ -157,6 +157,7 @@ sed -s -i -r 's|INITRD /initramfs|INITRD /boot/initramfs|g' /mnt/boot/extlinux.c
 
 dd if=/usr/share/syslinux/mbr.bin of=/dev/sda
 ```
+Lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
 
 En las imagenes se muestra todos estos, usar como referencia.
 
@@ -170,6 +171,10 @@ En las imagenes se muestra todos estos, usar como referencia.
 # Vease tambien:
 
 * [README informacion general](../README.md)
+* [Receta despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
+* [instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md](instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md)
+* [instalar-desde-usb-a-discoreal-alpinesolo-computadora.md](instalar-desde-usb-a-discoreal-alpinesolo-computadora.md) 
+* [instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md](instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md).
 * [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
 * [Entorno grafico](../programas/README-escritorios.md)
 * [Instalacion de programas](../programas/programas-esenciales-todo-en-uno.md)

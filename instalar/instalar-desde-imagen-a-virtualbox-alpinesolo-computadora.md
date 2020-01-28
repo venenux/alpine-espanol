@@ -1,5 +1,5 @@
 
-Este documento guiara para **instalar Alpine como unico systema en el disco**, 
+Este documento guiara para **instalar Alpine como unico systema en VirtualBox**, 
 y particionara automaticamente el disco colocando solo Alpine Linux y con Grub.
 Debe descargar un ISO de Alpine version "extended" recomendable para internet lento.
 
@@ -10,19 +10,16 @@ usar CD/DVD lea: [instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md](in
 
 ## preparar medios para instalar
 
-**Monte el disco real como esclavo en la pc**, si usa laptop necesitara una bahia de disco externo.
-Para esto creamos una unidad que mapee el disco real como virtual y despues crear 
-una maquina virtualbox que lo utilize, desde virtualbox:
-
-```
-VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdb -filename /home/systemas/VirtualBox\ VMs/rawdisk-sdb.vmdk
-```
+Descarge el medio a instalar, actualmente VirtualBox puede crear maquinas virtuales 
+en arquitecturas de i386, amd64 y arm. Lo que significa que puede descargar imagenes 
+de el isntalador en 32 bits o 64 bits respectivamente.
 
 **NOTA:** el instalador de alpine automatiza la creacion de particiones,
 generalmente el 70% es la raiz y 100M en el boot, swap nunca pasa de 4 gigas.
 
-Despues configuramos una maquina virtual, y arrancamos con ese disco, 
-es decir se le debe configurar la maquina virtual para que arranque el iso 
+Despues configuramos una maquina virtual, de 756Mb de ram es mas que suficiente
+el disco virtual debera ser minimo de 4Gb de capacidad debido a la swap, 
+y se le debe configurar la maquina virtual para que arranque el iso 
 descargado de Alpine linux en el segundo dispositivo de media storage.
 Para que arranque desde este medio se le pulsa `F12` en la pantalla apenas 
 enciende o inicia la maquina virtual desde el virtualbox.
@@ -91,28 +88,13 @@ esto creara y dejara su disco duro de la siguiente manera:
 * `/dev/sda2` como SWAP en 4Gb
 * `/dev/sda3` como ROOT en 200Gb en `/` (aproximadamente)
 
-En pocos minutos estara ya todo listo para usar, 
-lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
-
-# Aclaratorias y deficiencias
-
-1. **El boot manager es syslinux** aqui se customizo a grub, dado que, syslinux es mas 
-rapido pero solo Grub soporta bien UEFI, puesto en cada modificacion debe volver escribirse el MBR. 
-Cabe destacar que para dual boot es recomendable usar el directorio `/etc/update-extlinux.d/` 
-mediante la colocacion de archivos ".conf" se puede usar numeros para ello, la sintaxis debe 
-ser igual que la de syslinux para entradas, en nuestros documentos no apoyaremos syslinux 
-por ser demasiado delicado y exigir escribir en el MBR en cada cambio.
-2. **Para EFI en versiones viejas anteriores a la 3.9 se debe cambiar el bootmanager**, si puede 
-no se recomienda usar EFI/UEFI y desactivelo, desde Alpine 3.9.2 ya esto es automatico, 
-lamentablemente como toda distro minimalista su spoporte UEFI es cortado y deficiente, 
-desactive el UEFI y mejor use particionamiente MBR en vez de GPT para evitar problemas. 
-Hoy dia el instalador utiliza grub si necesita emplear soporte UEFI pero deben existir las particiones.
+En pocos minutos estara ya todo listo para usar, se recomeinda leer aclaratorias:
 
 # Vease tambien:
 
 * [README varios tipos de instalacion](README.md)
 * [Receta despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
-* [instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md](instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md)
 * [instalar-desde-usb-a-discoreal-alpinesolo-computadora.md](instalar-desde-usb-a-discoreal-alpinesolo-computadora.md) 
 * [instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md](instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md).
+* [instalar-desde-virtualbox-a-discoreal-dualboot-alpinesolo-guia.md](instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md)
 * [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)

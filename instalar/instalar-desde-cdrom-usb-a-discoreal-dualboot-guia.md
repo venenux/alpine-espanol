@@ -173,8 +173,11 @@ sed -s -i -r 's|KERNEL /vmlinuz|KERNEL /boot/vmlinuz|g' /mnt/boot/extlinux.conf
 sed -s -i -r 's|INITRD /initramfs|INITRD /boot/initramfs|g' /mnt/boot/extlinux.conf
 ```
 
-En las imagenes se muestra todos estos, usar como referencia.
+Si se empleo esto el alpine linux sera el que determine que arrancara, 
+si asi se quedase lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
 
+En caso contrario si tiene otros linux de uso principal se recomienda 
+leer la siguiente seccion:
 
 ## Actualizar el arranque desde particion Debian
 
@@ -204,6 +207,9 @@ menuentry "Alpine Linux (on /dev/sda1)" {
 }
 ```
 
+Las imagenes sirven como referencia, una vez terminado 
+lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
+
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-14.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-14.png)
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-15.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-15.png)
@@ -214,7 +220,9 @@ menuentry "Alpine Linux (on /dev/sda1)" {
 # Vease tambien:
 
 * [README informacion general](../README.md)
-* [instalar-desde-usb-cdrom-alpinesolo-guia-optimizado.md](instalar-desde-usb-cdrom-alpinesolo-guia-optimizado.md)
-* [instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md](instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md)
+* [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
+* [instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md](instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md)
+* [instalar-desde-usb-a-discoreal-alpinesolo-computadora.md](instalar-desde-usb-a-discoreal-alpinesolo-computadora.md) 
+* [instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md](instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md).
 * [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
 * [Informes y tablas de compatibilidad](../informes/hardware-y-versiones-alpine-recomendados.md)

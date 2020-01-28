@@ -1,5 +1,5 @@
 
-Este documento guiara para instalar Alpine desde otro linux ya presente, 
+Este documento guiara para **instalar Alpine desde Debian linux ya presente**, 
 en este caso desde Debian o similares (que usan apt o archivos paquetes deb)
 Esta variante asume tiene internet, esta en trabajo otro documento para otras vias.
 
@@ -155,6 +155,10 @@ notara que este sistema base no tiene mas de 500 a 900 megas de ocupado.
 
 # Vea tambien
 
-* [instalar-desde-debian-internet-alpine-chroot-particion-directorio.md](instalar-desde-debian-internet-alpine-chroot-particion-directorio.md)
+* [README varios tipos de instalacion](README.md)
+* [Receta despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
+* [instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md](instalar-desde-imagen-a-virtualbox-alpinesolo-computadora.md)
+* [instalar-desde-usb-a-discoreal-alpinesolo-computadora.md](instalar-desde-usb-a-discoreal-alpinesolo-computadora.md) 
+* [instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md](instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md).
+* [instalar-desde-virtualbox-a-discoreal-dualboot-guia.md](instalar-desde-virtualbox-a-discoreal-dualboot-guia.md)
 * [instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md](instalar-desde-virtualbox-a-discoreal-alpinesolo-guia.md)
-* [README (indice)](README.md)

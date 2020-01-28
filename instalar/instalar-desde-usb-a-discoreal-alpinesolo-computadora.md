@@ -3,31 +3,37 @@ Este documento guiara para **instalar Alpine como unico systema en el disco**,
 y particionara automaticamente el disco colocando solo Alpine Linux y con Grub.
 Debe descargar un ISO de Alpine version "extended" recomendable para internet lento.
 
-Esto sirve si no se tiene un USBdisc o CDrom vacios, entonces usaremos virtualbox, 
-la instalacion sera automatizada, creara unas particiones automaticamente, si puede 
-usar USB lease: [instalar-desde-usb-a-discoreal-alpinesolo-computadora.md](instalar-desde-usb-a-discoreal-alpinesolo-computadora.md) o 
-usar CD/DVD lea: [instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md](instalar-desde-cdrom-a-discoreal-alpinesolo-computadora.md).
+La instalacion sera automatizada, borrara el disco y creara las particiones, 
+lo que significa que su disco duro sera formateado y usado completo, debera 
+respaldar sus datos si hay previos en el disco duro a utilizar, o intentar 
+otros metodos en el [README varios tipos de instalacion](README.md)
 
 ## preparar medios para instalar
 
-**Monte el disco real como esclavo en la pc**, si usa laptop necesitara una bahia de disco externo.
-Para esto creamos una unidad que mapee el disco real como virtual y despues crear 
-una maquina virtualbox que lo utilize, desde virtualbox:
+Primero descargue un medio de origen, desde https://alpinelinux.org/downloads/,
+Todas las imágenes necesitarán conexión a Internet de red, excepto `extendido`.
 
-```
-VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdb -filename /home/systemas/VirtualBox\ VMs/rawdisk-sdb.vmdk
-```
+Para todos los usuarios, no importa el sistema operativo o la arquitectura,
+Recomendamos utilizar `balena-etcher-electron` de https://www.balena.io/etcher/
+para flashear la unidad USB desde cualquier sistema, por supuesto, debe ejecutarse
+como o desde el usuario root o administrador de su sistema operativo.
 
-**NOTA:** el instalador de alpine automatiza la creacion de particiones,
-generalmente el 70% es la raiz y 100M en el boot, swap nunca pasa de 4 gigas.
+Realice los siguientes pasos:
 
-Despues configuramos una maquina virtual, y arrancamos con ese disco, 
-es decir se le debe configurar la maquina virtual para que arranque el iso 
-descargado de Alpine linux en el segundo dispositivo de media storage.
-Para que arranque desde este medio se le pulsa `F12` en la pantalla apenas 
-enciende o inicia la maquina virtual desde el virtualbox.
- 
-![instalar-desde-virtualbox-a-discoreal-screenshot-00.png](instalar-desde-virtualbox-a-discoreal-screenshot-00.png)
+* descargue el archivo iso de la imagen multimedia, para UEFI el 3.11 minimo
+* descargue el programa `balena-etcher-electron` puede necesite instalar..
+* Ejecute el programa `balena-etcher-electron` como root en la sesión grafica
+* Haga clic en el icono "seleccionar imagen", abra el archivo de imagen descargado
+* Enchufe en la computadora la unidad USB, se mostrará automáticamente com sdb o similar
+* Después que `balena-etcher-electron` muestre el USB como "sdb", haga clic en `flash`
+* Espere un momento y cuando termine, cierre el programa
+* Saque el USB y coloquelo en la computadora objetivo de instalación en un puerto
+
+**IMPORTANTE** se recomeinda que solo tenga un unico usb conectado.
+
+![instalar-desde-usb-a-discoreal-alpinesolo-computadora-00.png](instalar-desde-usb-a-discoreal-alpinesolo-computadora-00.png)
+
+![instalar-desde-usb-a-discoreal-alpinesolo-computadora-01.png](instalar-desde-usb-a-discoreal-alpinesolo-computadora-01.png)
 
 Al iniciar Alpine preguntara por el login, solo escribir `root` y pulsar enter permite iniciar:
 
@@ -55,9 +61,7 @@ La manera de instalar alpine es simple y unica, un solo script realiza
 todas las tareas el `setup-alpine` este desde alpine v3.10 soporta perfectamente 
 todos los tipos sea UEFI o BIOS, el cual sera `grub` o `isolinux` respectivamente. 
 
-**ADVERTENCIAS** dado el minimalismo, lamentablemente se requiere internet, 
-a menos tengas una imagen ya instalada y simplemente la clones en el disco. 
-asi que **necesitas internet si es primera vez o no tienes imagen alpine**.
+**ADVERTENCIAS** si no descargo la imagen `extended` puede requiera internet.
 
 ## Instalar el sistema base
 
