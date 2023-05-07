@@ -36,9 +36,13 @@ Este documento asume tiene un discoduro pero solo una parte para Alpine Linux,
 pero no tiene un cd ni usb donde colocar el medio desde donde va instalar,
 realizando el proceso desde una maquina virtual hacia el disco real, 
 requerira una baiha externa o un puerto sata esclavo dentro de la pc.
-6. [instalar-desde-usb-cdrom-alpinesolo-guia-optimizado.md](instalar-desde-usb-cdrom-alpinesolo-guia-optimizado.md) (WIP)
+6. [instalar-desde-usb-a-discoreal-alpinesolo-computadora.md](instalar-desde-usb-a-discoreal-alpinesolo-computadora.md) (WIP)
+Este documento asume tiene un discoduro, USB sitck ya grabado (o usb) y lo borrara todo, para solo tener alpine, 
+pero asumiendo que todas las configuraciones de disco duro seran automaticas no importa si tiene o no UEFI.
+7. [instalar-desde-usb-cdrom-alpinesolo-guia-optimizado.md](instalar-desde-usb-cdrom-alpinesolo-guia-optimizado.md) (WIP)
 Este documento asume tiene un discoduro, cdrom ya grabado (o usb) y lo borrara todo, para solo tener alpine, 
 pero optimiza la particion customizado usando optimizacion y MBR del disco en vez de UEFI.
+
 
 # Guias que instalan sin media de instalacion pero desde otro linux
 
