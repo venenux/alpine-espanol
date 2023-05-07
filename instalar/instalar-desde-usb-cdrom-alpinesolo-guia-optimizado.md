@@ -159,6 +159,8 @@ dd if=/usr/share/syslinux/mbr.bin of=/dev/sda
 ```
 Lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
 
+![install-alpine-alpine-setup-3-setup-scripts.png](install-alpine-alpine-setup-3-setup-scripts.png)
+
 En las imagenes se muestra todos estos, usar como referencia.
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png)

@@ -94,6 +94,8 @@ esto creara y dejara su disco duro de la siguiente manera:
 En pocos minutos estara ya todo listo para usar, 
 lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
 
+![install-alpine-alpine-setup-3-setup-scripts.png](install-alpine-alpine-setup-3-setup-scripts.png)
+
 # Aclaratorias y deficiencias
 
 1. **El boot manager es syslinux** aqui se customizo a grub, dado que, syslinux es mas 

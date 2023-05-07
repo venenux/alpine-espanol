@@ -90,6 +90,8 @@ esto creara y dejara su disco duro de la siguiente manera:
 
 En pocos minutos estara ya todo listo para usar, se recomeinda leer aclaratorias:
 
+![install-alpine-alpine-setup-3-setup-scripts.png](install-alpine-alpine-setup-3-setup-scripts.png)
+
 # Vease tambien:
 
 * [README varios tipos de instalacion](README.md)

@@ -154,6 +154,8 @@ Esto copiara el sistema al disco pero recordemos tenemos el sistema en una sola 
 y que tenemos otro linux en "/dev/sda2" en la segunda particion, asi que el siguiente apartado 
 es arrancar este linux en modo chroot y desde el mismo instalar/actualizar su manager de arranque.
 
+![install-alpine-alpine-setup-3-setup-scripts.png](install-alpine-alpine-setup-3-setup-scripts.png)
+
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-08.png)
 
 ![instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-10.png](instalar-desde-virtualbox-a-discoreal-dualboot-screenshot-10.png)
