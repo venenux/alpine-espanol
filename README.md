@@ -1,4 +1,4 @@
-https://mckayemu.github.io/alpineinstalls/
+https://venenux.github.io/alpineinstalls/
 
 # alpineinstalls
 
@@ -119,6 +119,6 @@ No usan foros web, tenia un foro pero fue descartado porque la lista de correo e
 
 ## Como contribuir a esta documentacion
 
-Debe usar la plataforma "gitlab", y el flujo comun de pull request aqui: https://gitlab.com/mckayemu/alpineinstalls
+Debe usar la plataforma "gitlab", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpineinstalls
 Requisito indispensable no usar guindows ni winbuntu.-
 
