@@ -15,6 +15,7 @@
 		browserRouter: false,
 		name: "VenenuX Alpine",
 		components: ["documentos/navbar", "documentos/navcorner"],
+		footers: ["documentos/navfooter"],
 	};
 </script>
 
@@ -129,7 +130,7 @@
 	h3,
 	h4,
 	h5 {
-		padding-bottom: 0.3em;
+		padding-bottom: 0.2em;
 	}
 
 	h1,
@@ -156,7 +157,7 @@
 	}
 
 	img {
-		max-height: 20em;
+		max-height: 16em;
 		border-radius: var(--border-radius);
 	}
 
@@ -170,15 +171,15 @@
 	:not(pre)>code {
 		background: var(--darker-background-color);
 		border-radius: var(--border-radius);
-		padding: 0.2em 0.4em;
+		padding: 0.1em 0.2em;
 	}
 
 	pre {
 		background: var(--darker-background-color);
-		padding: 1.6em !important;
+		padding: 1.4em !important;
 		overflow: auto;
 		padding: calc(0.75em);
-		margin-bottom: 1em;
+		margin-bottom: 0.5em;
 		border-radius: var(--border-radius);
 	}
 
@@ -193,10 +194,10 @@
 
 	table {
 		border-collapse: collapse;
-		margin: 2em 0;
+		margin: 1em 0;
 		font-size: 0.9em;
 		font-family: sans-serif;
-		min-width: 20em;
+		min-width: 16em;
 		border-radius: var(--border-radius);
 		overflow: auto;
 		display: block;
@@ -210,7 +211,7 @@
 
 	table th,
 	table td {
-		padding: 0.8em 1.2em;
+		padding: 0.8em 1.0em;
 	}
 
 	table tbody tr:nth-of-type(odd) {
@@ -280,7 +281,7 @@
 
 	button,
 	.button {
-		padding: 1rem 2em;
+		padding: 1rem 1.6em;
 		background: #4285f4;
 		color: white;
 		overflow: auto;
@@ -300,6 +301,7 @@
 <body>
 	<div id="components"></div>
 	<div id="content"></div>
+	<div id="footer"></div>
 </body>
 <script>
 	const markedProps = {};
@@ -308,6 +310,7 @@
 
 	let cwd = "";
 	config.contentPath = config.sitePath;
+	const footersDiv = document.getElementById("footer");
 	const contentDiv = document.getElementById("content");
 	const componentsDiv = document.getElementById("components");
 	if (!config.browserRouter) config.sitePath = config.sitePath + "#/";
@@ -367,6 +370,15 @@
 		const markdown = await res.text();
 		if (markdown.startsWith("<!doctype html>")) throw Error();
 		return marked.parse(markdown, markedProps);
+	};
+
+	const loadFooters = async (element) => {
+		const html = await renderMD(element);
+		if (!html) return;
+		let div = document.createElement("div");
+		div.innerHTML = html;
+		div.id = element.replaceAll("/", "-");
+		footersDiv.prepend(div);
 	};
 
 	const loadComponent = async (element) => {
@@ -429,6 +441,7 @@
 	window.onload = async () => {
 		await Promise.all((config.components || []).map((component) => loadComponent(component)));
 		await loadContent();
+		await Promise.all((config.footers || []).map((footer) => loadFooters(footer)));
 	};
 	window.onhashchange = loadContent;
 	if (config.browserRouter) window.onpopstate = loadContent;
