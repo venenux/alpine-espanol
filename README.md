@@ -112,6 +112,6 @@ Consulte [documentos/navfooter.md](documentos/navfooter.md) para mas informacion
 
 ## Como contribuir a esta documentacion
 
-Debe usar la plataforma "codeberg", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpine-espanols
-Requisito indispensable no usar guindows ni winbuntu.-
+Debe usar la plataforma "codeberg", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpine-espanol
+**Requisito indispensable no usar guindows ni winbuntu**.-
 
