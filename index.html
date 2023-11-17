@@ -1,12 +1,99 @@
 <!doctype html>
-<html lang="en">
+<html>
 
 <head>
 	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" href="documentos/alpinevenenux.svg">
 	<link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+	<style>
+		:root {
+			--text-color: #000000;
+			--border-color: #a7cefc;
+			--border-h-color: #313ae2;
+			--border-hl-color: #dbdbdb;
+			--background-color: white;
+			--background-navbar-color: #0059c5;
+			--darker-background-color: #d1d7df2f;
+			--lighter-background-color: #fbfdff;
+		}
+
+		#documentos-navbar {
+			margin: 0;
+			overflow: hidden;
+			background-color: var(--background-navbar-color);
+			position: fixed;
+			width: 100%;
+			padding-left: 2rem;
+			z-index: 5;
+		}
+		#documentos-navbar a {
+			float: left;
+			display: block;
+			color: var(--background-color);
+			text-align: center;
+			padding: 14px;
+			text-decoration: none;
+		}
+		#documentos-navbar li::before {
+			content: none;
+		}
+
+		#content {
+			background-color: var(--background-color);
+			max-width: 90%;
+			padding: 5rem 1rem;
+			margin: auto;
+			padding-top: 5em;
+		}
+
+		body {
+			font-family: "Open Sans", Helvetica, sans-serif;
+			color: var(--text-color);
+			margin: 0;
+			padding: 0;
+			opacity: 0;
+			transition: opacity 0.4s;
+		}
+		body.loaded {
+		  	opacity: 1;
+		}
+
+		h1 {
+			border-bottom: 1px solid var(--border-h-color);
+		}
+		h2,
+		h3,
+		h4,
+		h5 {
+			border-bottom: 1px solid var(--border-hl-color);
+		}
+
+		table {
+			border-collapse: collapse;
+			display: block;
+		}
+		table tbody td {
+			border: solid 1px var(--border-color) !important;
+			padding: 0.1em 1.1em;
+			border-color: var(--border-color) !important;
+			min-width: 100px;
+		}
+		table thead tr {
+			text-align: left;
+			padding: 0.1em 1.1em;
+			background-color: var(--border-color);
+		}
+		table tbody tr:nth-of-type(odd) {
+			background-color: var(--darker-background-color);
+		}
+		table tbody tr:nth-of-type(even) {
+		 	background-color: var(--lighter-background-color);
+		}
+		table tbody tr.active-row {
+		 	font-weight: bold;
+		}
+	</style>
 </head>
 
 <!-- USER CONFIG -->
@@ -26,7 +113,6 @@
 <!-- OPTIONAL : Highlight.js - Syntax Highlighting -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/material-lighter.min.css">
-
 
 <body>
 	<div id="components"></div>

@@ -1,15 +1,8 @@
-# alpine-espanols
+# alpine-espanol
 
-**Sitio en español para la experiencia usuario con alpine.**  https://venenux.github.io/alpineinstalls/
+**Sitio en español para la experiencia usuario con alpine.**  https://venenux.github.io/alpine-espanol/
 
-### A que se parece alpine linux?
-
-| a que se parece | como usuario        | como desarollador   | como linuxero        |
-| --------------- | ------------------- | ------------------- | -------------------- |
-| a un linux:     |     geento          |      archlinux      |        Devuan        |
-| porque es:      | dificil y tecnico   | anda a la moda      | hay que saber que se hace |
-
-Es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero rapida..**
+> Es **rustica, pero simple, rudimentaria pero rapida..** aunqeu se sienta como volver a la prehistoria..
 
 ## Indice
 
@@ -22,7 +15,7 @@ Es **como volver a la prehistoria, rustica, pero simple, rudimentaria pero rapid
 * [Comunidad Alpine español](#comunidad)
   * [Como contribuir a esta documentacion](#como-contribuir-a-esta-documentacion)
 
-## Inicio:
+# Inicio
 
 Alpine permite instalar desde disco, usb, o red, en las dos primeras usa 
 una imagen arrancable mientras que en la tercera se necesita una clonacion
@@ -34,6 +27,13 @@ se emplea una maquina virtual, ideal para su computador si quiere probar.
 
 Para mejores u/o **otras combinaciones de instalacion leer [instalar/README.md](instalar/README.md)**
 
+### A que se parece alpine linux?
+
+| a que se parece | como usuario        | como desarollador   | como linuxero        |
+| --------------- | ------------------- | ------------------- | -------------------- |
+| a un linux:     |     geento          |      archlinux      |        Devuan        |
+| porque es:      | dificil y tecnico   | anda a la moda      | hay que saber que se hace |
+
 ## Instalar programas y recetas
 
 En alpine los programas se instalan desde la red, y son llamados "paquetes", 
@@ -42,7 +42,7 @@ o puede usar [los graficos y escritorio de trabajo con el documento recetas/alpi
 
 Si tiene dudas para los iniciados lease [recetas/alpine-recetas-configuracion-y-paquetes-sistema.md](alpine-recetas-configuracion-y-paquetes-sistema.md)
 
-### QUE VERSION ME CONVIENE PARA QUE HARDWARE
+## QUE VERSION ME CONVIENE PARA QUE HARDWARE
 
 **Alpine no es un distro de uso general, y no ha sido probada en muchas maquinas, sin embargo:** 
 basado en las trazas de internet, los kernel news y los alpine bugs, se construye una 
@@ -106,17 +106,12 @@ solo la que estos documentos en español ofrecemos aqui.
 y remueve sin estimar si afecta software de terceros, tal como se removio gtkglext 
 despoticamente, mientras mas nuevo menos soporte tiene su hardware.
 
-# Comunidad
+# Contactos
 
-* Lista de correo: https://lists.alpinelinux.org/~alpine/users
-* Grupo telegram: https://t.me/alpine_linux_espanol y el ingles: https://t.me/alpine_linux
-* Chat IRC oficial: irc://irc.freenode.net/alpine-linux pero es en ingles...
-* Indice de paquetes "bien hechos": (WIP), lo siento eso de "alpine comunity" tiene muuucha basura...
-
-No usan foros web, tenia un foro pero fue descartado porque la lista de correo es similar y cumple..
+Consulte [documentos/navfooter.md](documentos/navfooter.md) para mas informacion.
 
 ## Como contribuir a esta documentacion
 
-Debe usar la plataforma "gitlab", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpine-espanols
+Debe usar la plataforma "codeberg", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpine-espanols
 Requisito indispensable no usar guindows ni winbuntu.-
 
