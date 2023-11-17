@@ -1,6 +1,7 @@
 
-De cualquier manera, esta sección describe, paso a paso, cómo obtener e instalar el uso 
-de las **principales utilidades de configuración**, así como explicaciones para una instalación 
+De cualquier manera, esta sección describe, paso a paso, cómo obtener e
+instalar el uso  de las **principales utilidades de configuración**, así
+como explicaciones para una instalación 
 **mucho mas completa (los de alpine minimalizan tanto que eso ni sirve) en una computadora común 
 basada en UEFI exclusivamente, especialmente la DELL OPTIPLEX 7071, el cargador Grub admite la 
 indexación de particiones base EFI y GPT. Se uso un DELL OPTIPLEX 7071 i9 9900K 10 gen para est documento.
@@ -9,7 +10,7 @@ indexación de particiones base EFI y GPT. Se uso un DELL OPTIPLEX 7071 i9 9900K
 
 Primero descargue un medio de origen, desde https://alpinelinux.org/downloads/ , todas 
 las imágenes necesitarán una conexión a Internet, excepto "extended" que vienen con paquetes 
-de necesidad mínima, pero solo están basados ��en x86.
+de necesidad mínima, pero solo están basados en x86.
 
 Para todos los usuarios, no les importa qué sistema operativo viene o qué arquitectura, recomendamos 
 usar `balena-etcher-electron` https://www.balena.io/etcher/ para flashear una unidad USB desde 
