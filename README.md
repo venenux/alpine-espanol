@@ -1,8 +1,6 @@
-https://venenux.github.io/alpineinstalls/
+# alpine-espanols
 
-# alpineinstalls
-
-**Sitio en español para la experiencia usuario con alpine.** 
+**Sitio en español para la experiencia usuario con alpine.**  https://venenux.github.io/alpineinstalls/
 
 ### A que se parece alpine linux?
 
@@ -119,6 +117,6 @@ No usan foros web, tenia un foro pero fue descartado porque la lista de correo e
 
 ## Como contribuir a esta documentacion
 
-Debe usar la plataforma "gitlab", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpineinstalls
+Debe usar la plataforma "gitlab", y el flujo comun de pull request aqui: https://codeberg.org/venenux/alpine-espanols
 Requisito indispensable no usar guindows ni winbuntu.-
 
