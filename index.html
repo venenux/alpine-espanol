@@ -254,7 +254,15 @@
 							loadContent();
 						};
 				});
-			if (selector) document.getElementById(selector)?.scrollIntoView()
+			if (selector) {
+				offsettag = window.innerHeight / 8
+				taganchor = document.getElementById(selector);
+				taganchor.scrollIntoView({behavior: "smooth", block: "start", inline: "start", offset: offsettag})
+				if(config.scrollworkaround) {
+					const y = taganchor.offsetTop - (offsettag);
+					window.scrollTo( { top: y, left: 0, behavior: 'smooth' } );
+				};
+			};
 
 			document.body.classList.add("loaded");
 			if (!config.browserRouter) window.location.replace(config.sitePath + path);
