@@ -11,6 +11,10 @@ esta muy al dia inclusive en versiones viejas como `3.6` y `3.7`.** Por ejemplo
 `lua` esta tanto la version 5.1, como 5.2 y 5.3, y php esta 5.6 y 7.1 desde hace mucho 
 en los repositorios de alpine y si estan en comunidad mucho mas desde antes.
 
+## Comenzando con linux
+
+* Entorno de consola, que es una shell y como configurarla en alpine [alpine-arrancando-shells.md](alpine-arrancando-shells.md)
+
 ## Documentos desarrollo:
 
 * Entorno de desarrollo separado [alpine-packaging-chroot.md](alpine-packaging-chroot.md), 
