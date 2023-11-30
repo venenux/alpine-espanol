@@ -15,13 +15,14 @@ En Alpine, la terminal predeterminada siempre le proporcionará "ash" a través 
 El sistema operativo no tiene una interfaz oficial, podría ser
 uno de consola o una gráfica.
 
-| Nombre del shell | nombre paquete | desde | programa(s) principal(es) |
-| ---------------- | -------------- | ----- | --------------- |
-| bash             | bash           | 3.0   | `/bin/bash`, `/usr/lib/bash/` |
-| dash             | dash           | 3.17  | `/bin/dash` |
-| csh              | tcsh           | 3.4   | `/bin/csh`, `/bin/tcsh`, `/etc/tcsh.cshrc` |
-| zsh              | zsh            | 3.4   | `/bin/zsh`, `/usr/lib/zsh/` |
-| fish             | fish           | 3.10  | `/usr/bin/fish`, `/etc/fish/config.fish`, `/usr/share/fish/` |
+| Nombre     | Nombre del paquete del shell        | desde | programas principales |
+| ---------- | ----------------------------------- | ----- | --------------- |
+| bash       | bash bash-doc                       | 3.0   | `/bin/bash`, `/usr/lib/bash/` |
+| dash       | dash dash-doc                       | 3.17  | `/bin/dash` |
+| csh        | tcsh tcsh-doc                       | 3.4   | `/bin/csh`, `/bin/tcsh`, `/etc/tcsh.cshrc` |
+| zsh        | zsh zsh-vcs zsh-zftp zsh-doc        | 3.4   | `/bin/zsh`, `/usr/lib/zsh/` |
+| fish       | fish fish-tools fish-dev fish-doc   | 3.10  | `/usr/bin/fish`, `/etc/fish/config.fish`, `/usr/share/fish/` |
+| nushell    | nushell nushell-plugins nushell-doc | edge  | `/usr/bin/nushell` |
 
 #### cambiar manualmente el shell de la consola predeterminado
 
@@ -110,6 +111,57 @@ En cada una de las opciones de este documento se puso un paso que decía: "Verif
 bueno, cada shell debe estar presente en el archivo `/etc/shells` antes de aplicar.
 
 > **Nota**: Si el shell se compila manualmente y no está empaquetado, ¡debe agregarlo al archivo! `/etc/shells`
+
+#### como agregar una version mas reciente o recien empaquetada
+
+Esto depende, consulte varios ejemplos:
+
+* si estás usando Alpine 3.8 y quieres un shell más reciente como `fish`, **¡puedes!**
+* si estás usando Alpine 3.8 y quieres un shell más reciente como `nushell`: **no puedes porque está muy lejos de 3.8**
+* si estás usando Alpine 3.12 y quieres un shell más reciente como `fish`: **¡puedes!**
+* si está utilizando Alpine 3.17 o 3.18 y desea un shell más reciente como `nushell`: **¡puede hacerlo!**
+
+Esto significa que usted:
+
+* actualizar los repositorios de la versión actual
+* instalar las dependencias requeridas (verifique el nombre del paquete en pkgs.alpinelinux.org
+* agregar el repositorio de la siguiente versión inmediata
+* instalar la nueva versión más actualizada
+* comprobar los archivos requeridos
+* cambiar el shell para el usuario deseado
+* eliminar el repositorio adicional inmediato, configurando los normales nuevamente
+* Pruebe si funciona; de lo contrario, deberá actualizar a Next Alpine o usar archivos estáticos apk para reparar World DB.
+
+A modo de ejemplo, esto le muestra cómo instalar Nushell en Alpine 3.17 o 3.18 que está cerca del borde (como 2023):
+
+```
+cat > /etc/apk/repositories << EOF; $(echo)
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+
+apk update && apk add shadow shadow-doc grep busybox-binsh libcrypto3 libgcc libssl3 sqlite-libs
+
+cat > /etc/apk/repositories << EOF; $(echo)
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+http://dl-cdn.alpinelinux.org/alpine/edge/main
+http://dl-cdn.alpinelinux.org/alpine/edge/community
+EOF
+
+apk update && apk add nushell nushell-plugins nushell-doc
+
+touch /etc/login.defs && mkdir /etc/default/ && touch /etc/default/useradd
+
+chsh -s $(grep nushell /etc/shells) general
+
+cat > /etc/apk/repositories << EOF; $(echo)
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+
+apk update
+```
 
 ### Acerca del material protegido por derechos de autor
 
