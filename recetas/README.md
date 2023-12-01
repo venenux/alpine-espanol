@@ -10,10 +10,17 @@ En alpine los programas se instalan desde la red, pienselo, aunque compre un CD 
 igual es con los paquetes, estos no estan en su sistema, si no tiene internet se puede descargar todos 
 en un directorio y instalar desde alli con una simple linea
 
+## Tutoriales mas comunes maquinas escritorio
+
 1. Instalaciones: [../instalar/README.md](../instalar/README.md)
 2. Escritorio multimedia XFCE4 paso a paso: [programas-escritorio-xfce4-uso-general.md](programas-escritorio-xfce4-uso-general.md)
 3. Guia de comandos para escritorio openbox y devel: [programas-esenciales-todo-en-uno.md](programas-esenciales-todo-en-uno.md)
 4. Diferencias para comandos y administracion en [../documentos/diferencias-entre-linux.md](../documentos/diferencias-entre-linux.md) 
+
+## Tutoriales de servidor y servicios
+
+* Servicios
+    * Configurar UPS APC como servicio y paquetes web [alpine-howto-apcupsd-service.md](alpine-howto-apcupsd-service.md)
 
 # Vease tambien
 
