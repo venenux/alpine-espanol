@@ -20,7 +20,7 @@ en un directorio y instalar desde alli con una simple linea
 ## Tutoriales de servidor y servicios
 
 * Servicios
-    * Configurar UPS APC como servicio y paquetes web [alpine-howto-apcupsd-service.md](alpine-howto-apcupsd-service.md)
+    * Configurar UPS APC como servicio y paquetes web [alpine-recetas-apcupsd-service.md](alpine-recetas-apcupsd-service.md)
 
 # Vease tambien
 
