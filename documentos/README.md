@@ -39,6 +39,9 @@ empleando los paquetes conocidos desde el repositorio sin complicarse con filtra
 * Gestor de proyectos Redmine en [redmine-en-alpine.md](redmine-en-alpine.md), un entorno completisimo, 
 similar a gitlab y github pero que soporta SVN, GIT, etc ademas su sistema wiki es mas avanzado usando macros.
 
+* Gestionar proteccion con fail2ban en [alpine-fail2ban-avanzado.md](alpine-fail2ban-avanzado.md), 
+incluyendo proteccion euristica y variable, opciones y explicacion de como trabaja.
+
 ## documentos avanzados para machos
 
 Todo lo anterior es para jevitas, aqui esta la cosa buena:
