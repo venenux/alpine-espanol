@@ -426,6 +426,51 @@ bantime  = 20m
 
 `/var/log/messages` si se modifica en las definiciones de PAM, también se debe cambiar aquí
 
+### bind9 jail
+
+Esta es una configuración especial, será necesario modificar bind9 y configurarlo para 
+verificar los registros.para una configuración especial, el bind9 fail2ban 
+predeterminado rechazará cualquier solicitud que no sea autorizado, por lo que solo 
+ayudará para una configuración autorizada, esta configuración aquí usará la 
+configuración predeterminada de bind9 pero para la configuración de límite de 
+velocidad, pero recomendamos una mejor leer el [server-alpine-bind9-professional.md](server-alpine-bind9-professional.md)
+
+La linea de filtro debera quedar: `<HOST>#\S+( \([\S.]+\))?\: rate limit drop`
+
+```
+cp /etc/fail2ban/filter.d/named-refused.conf /etc/fail2ban/filter.d/named-refused-ratelimit.conf
+
+sed -i -r 's#failregex=.*#failregex=<HOST>\#\\S+( \\([\\S.]+\\))?\\: rate limit drop#g' /etc/fail2ban/filter.d/named-refused-ratelimit.conf
+
+cat > /etc/fail2ban/jail.d/04-bind.local << EOF
+[named-refused-udp]
+enabled  = true
+port     = domain,953
+protocol = udp
+filter   = named-refused-ratelimit
+logpath  = /var/log/messages
+findtime = 1
+maxretry = 5
+action   = iptables-multiport[name=Named, port=53, protocol=udp]
+[named-refused-tcp]
+enabled  = true
+port     = domain,953
+protocol = tcp
+filter   = named-refused-ratelimit
+logpath  = /var/log/messages
+findtime = 1
+maxretry = 5
+action   = iptables-multiport[name=Named, port=53, protocol=tcp]
+EOF
+
+/sbin/service fail2ban restart
+
+/sbin/service syslog restart
+```
+
+> **Warning**: hemos usado `/var/log/syslog` porque el bind9 by default 
+volca todo a el log del sistema tanto en alpine como en debian.
+
 ### desbloquear IP solo en el servicio ssh
 
 `fail2ban-client establece sshd unbanip 10.10.1.2`
