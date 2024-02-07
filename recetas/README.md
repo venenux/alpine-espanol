@@ -21,6 +21,8 @@ en un directorio y instalar desde alli con una simple linea
 
 * Servicios
     * Configurar UPS APC como servicio y paquetes web [alpine-recetas-apcupsd-service.md](alpine-recetas-apcupsd-service.md)
+* Alpine
+    * Como hacer paquetes de alpine [alpine-recetas-hacer-paquetes-alpine-localmente.md](alpine-recetas-hacer-paquetes-alpine-localmente.md)
 
 # Vease tambien
 
