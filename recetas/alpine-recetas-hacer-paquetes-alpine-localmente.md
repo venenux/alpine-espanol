@@ -16,8 +16,10 @@ doas apk add abuild
 
 `adduser general`
 
-luego de haber creado dicho usuario, debe darle permiso en `/etc/sudoers`, añadiendo la linea
+luego de haber creado dicho usuario, debe darle permisos en `/etc/sudoers`, añadiendo la linea
+
 `general ALL=(ALL) ALL`
+
 por debajo de
 
 ```
