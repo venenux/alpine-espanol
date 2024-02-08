@@ -1,4 +1,3 @@
-
 Aqui se aprendera crear y hacer un repositorio de `APKBUILD` (recetas) 
 para hacer paquetes para [Alpine linux](../README.md)
 tambien para configurar `abuild` para que puedas crear los paquetes 
@@ -22,43 +21,48 @@ añada la línea usando el comando `visudo`:
 
 `general ALL=(ALL) ALL` una línea por debajo de
 
-User privilege specification
+```
+## User privilege specification
+##
+root ALL=(ALL:ALL) ALL
+```
 
-``root ALL=(ALL) ALL``
+Ahora cierre la sesión de la cuenta de root, e inicie sesión como `general`. A partir de aquí todo se puede hacer en una cuenta de usuario normal, y las operaciones que requieren privilegios de superusuario se pueden hacer con `doas`.
 
-Ahora cierre la sesión de la cuenta de root, e inicie sesión como `general`. A partir de aquí todo se puede hacer en una cuenta de usuario normal, y las operaciones que requieren privilegios de superusuario se pueden hacer con sudo.
+Puede intentar iniciar sesion usando su.
+
+`su general`
 
 ### Configurando git
-
 Debe configurar git en su nueva sesion de usuario
 
-`git config --global user.name "tu nombre como esta en gitlab"`
-
-`git config --global user.email "tuusario@tucorreoelectronico.com"`
+```
+git config --global user.name "tu nombre como esta en gitlab"
+git config --global user.email "tuusario@tucorreoelectronico.com"
+```
 
 Antes de empezar a crear o modificar archivos APKBUILD, necesitamos darle permisos de `abuild` al usuario creado.
-Edite el archivo abuild.conf según sus necesidades, desde la terminal:
+Edite el archivo `/etc/abuild.conf` según sus necesidades, desde la terminal:
 
-`sudo addgroup general abuild`
+`doas addgroup general abuild`
 
 También necesitamos preparar la ubicación donde el proceso de compilación almacena
 en caché los archivos que se descargan, por defecto es `/var/cache/distfiles/`, para crear este directorio y asegurarse de 
 que tiene permisos de escritura, introduzca los siguientes comandos:
 
-`sudo mkdir -p /var/cache/distfiles`
-
-`sudo chmod a+w /var/cache/distfiles`
-
-`sudo chgrp abuild /var/cache/distfiles`
-
-`sudo chmod g+w /var/cache/distfiles`
+```bash
+doas mkdir -p /var/cache/distfiles
+doas chmod a+w /var/cache/distfiles
+doas chgrp abuild /var/cache/distfiles
+doas chmod g+w /var/cache/distfiles
+```
 
 El último paso es configurar las claves de seguridad con el script `abuild-keygen` para abuild con el comando: 
 
 `abuild-keygen -a -i`
 
 En versiones anteriores de Alpine, teníamos que crear manualmente claves para firmar paquetes e índices. Esto explica cómo, hoy en día se puede usar `abuild-keygen`.
-Dado que la clave pública debe ser única para cada desarrollador, la dirección de correo electrónico debe utilizarse como nombre de la clave pública. 
+Dado que la clave pública debe ser única para cada desarrollador, la dirección de correo electrónico debe utilizarse como nombre de la clave pública si asi lo desea. 
 
 #### Creando una llave privada
 
@@ -68,18 +72,21 @@ Dado que la clave pública debe ser única para cada desarrollador, la direcció
 
 `openssl rsa -in tucorreoelectronico.priv -pubout -out /etc/apk/keys/tucorreoelectronico`
 
-La llave pública debe ser distribuida e instalada en /etc/apk/keys la caja de alpine 
+La llave pública debe ser distribuida e instalada en `/etc/apk/keys/` la caja de alpine 
 que instalará los paquetes, esto significa básicamente que las llaves públicas del desarrollador principal 
-deberían estar en /etc/apk/keys en todas las cajas Alpine.
+deberían estar en `/etc/apk/keys/` en todas las cajas Alpine.
 
 ### Para crear los paquetes con abuild
 
-Entraremos en la carpeta donde estan los paquetes con el comando `cd`,
-dentro de la carpeta de los paquetes usaremos. 
+Entraremos en el directorio donde estan ubicados los paquetes con el comando `cd`.
 
-`cd nombre del paquete`.
+Ya adentro de la carpeta del nombre del paquete ejecutaremos el comando `abuild -r`, el argumento `-r` se encargara de instalar las depencias de el paquete a la hora de la construccion y los desintalara al terminar la construccion del mismo, asegurandose asi de tener un sistema limpio de librerias y/o dependencias no usadas por el sistema.
 
-Ya adentro de la carpeta del nombre del paquete ejecutaremos el comando `abuild`.
+Terminando en algo como esto:
+```bash
+cd paquete
+abuild -r
+```
 
 # mas informacion
 
