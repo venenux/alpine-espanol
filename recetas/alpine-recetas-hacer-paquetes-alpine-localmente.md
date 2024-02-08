@@ -16,16 +16,17 @@ doas apk add abuild
 
 `adduser general`
 
-luego de haber creado dicho usuario, debe darle permiso en `/etc/sudoers`
-añada la línea usando el comando `visudo`:
-
-`general ALL=(ALL) ALL` una línea por debajo de
+luego de haber creado dicho usuario, debe darle permiso en `/etc/sudoers`, añadiendo la linea
+`general ALL=(ALL) ALL`
+por debajo de
 
 ```
 ## User privilege specification
 ##
 root ALL=(ALL:ALL) ALL
 ```
+
+**nota:** puede editar el archivo `/etc/sudoers` usando `visudo` o su editor de texto preferido.
 
 Ahora cierre la sesión de la cuenta de root, e inicie sesión como `general`. A partir de aquí todo se puede hacer en una cuenta de usuario normal, y las operaciones que requieren privilegios de superusuario se pueden hacer con `doas`.
 
