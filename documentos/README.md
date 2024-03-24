@@ -17,8 +17,9 @@ en los repositorios de alpine y si estan en comunidad mucho mas desde antes.
 
 ## Documentos desarrollo:
 
-* Entorno de desarrollo separado [alpine-packaging-chroot.md](alpine-packaging-chroot.md), 
-le permite usar alpine en cualqueir otro linux sin instalar paquetes de sobra o sin instalar en otra particion.
+* Entorno de desarrollo separado [alpine-paquetes-entorno.md](alpine-paquetes-entorno.md), 
+le permite entender, desarrollar y crear paquetes de programas para el formato de 
+manejo de software en alpine linux llamado APK!
 
 ## documentos servicios estandar
 
