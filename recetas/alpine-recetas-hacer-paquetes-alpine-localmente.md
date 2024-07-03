@@ -34,8 +34,11 @@ apk add shadow shadow-doc shadow-uidmap bash bash-doc bash-dev \
  zip zip-doc p7zip p7zip-doc xz xz-doc tar tar-doc file file-doc
  
 apk add abuild abuild-rootbld abuild-doc build-base gcc-doc make-doc patch-doc \
+ gcc gcc-gdc gcc-go g++ gcc-objc gcc-doc \
  arch-install-scripts arch-install-scripts-doc lzip-doc tar-doc zlib-doc \
  apk-tools-doc alpine-sdk git git-doc
+
+apk add doas doas-sudo-shim
 ```
 
 La justificacion de estos paquetes puede leerla en 
@@ -50,7 +53,7 @@ cat >  /etc/doas.d/general.conf << EOF
 permit keepenv :general
 EOF
 
-for u in $(ls /home); do for g in abuild disk lp floppy audio cdrom dialout video lp netdev games users ping; do addgroup $u $g; done;done
+for u in $(ls /home); do for g in abuild wheel adm netdev kvm disk lp floppy audio cdrom dialout video lp games users ping; do addgroup $u $g; done;done
 ```
 
 La explicacion de que hacen y el porque estos comandos puede leerla en 
@@ -59,6 +62,8 @@ La explicacion de que hacen y el porque estos comandos puede leerla en
 Ahora **cierre la sesión de la cuenta de root, e inicie sesión como `general`**. 
 
 ### Iniciando sesion y configurando el entorno
+
+User must be in some special groups what will be only available if you follow this guide from beggining!
 
 ```
 mkdir -m 775 -p /home/general/Devel
