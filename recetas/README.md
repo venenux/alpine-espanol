@@ -23,6 +23,9 @@ en un directorio y instalar desde alli con una simple linea
     * Configurar UPS APC como servicio y paquetes web [alpine-recetas-apcupsd-service.md](alpine-recetas-apcupsd-service.md)
 * Alpine
     * Como hacer paquetes de alpine [alpine-recetas-hacer-paquetes-alpine-localmente.md](alpine-recetas-hacer-paquetes-alpine-localmente.md)
+* Guias completas
+    * Alpine 3.14 + Apache2 + PHP 7 + MySQL + OSPOS4 [server-alpine-LAMP-ospos-314.md](server-alpine-LAMP-ospos-314.md)
+    * Alpine 3.20 + Apache2 + PHP 8.3 + MySQL + OSPOS3 [server-alpine-LAMP-ospos-320.md](server-alpine-LAMP-ospos-320.md)
 
 # Vease tambien
 
