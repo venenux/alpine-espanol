@@ -44,9 +44,11 @@ sed "s|^[#]*PermitRootLogin.*|PermitRootLogin yes|g" -i /etc/ssh/sshd_config
 
 ```
 apk add alsa-utils alsa-utils-doc alsa-lib alsaconf
-modprobe snd-pcm-oss and snd-mixer-oss
-echo "cuidado solo hacer una vez la siguente linea:"
-echo "snd-pcm-oss and snd-mixer-oss" >> /etc/modules
+modprobe snd-pcm-oss
+modprobe snd-mixer-oss
+sed -i '/snd-pcm-oss/d' /etc/modules
+sed -i '/snd-mixer-oss/d' /etc/modules
+echo -e "snd-pcm-oss\nsnd-mixer-oss" >> /etc/modules
 rc-service alsa start
 rc-update add alsa
 ```
