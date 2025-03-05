@@ -21,6 +21,7 @@ en un directorio y instalar desde alli con una simple linea
 
 * Servicios
     * Configurar UPS APC como servicio y paquetes web [alpine-recetas-apcupsd-service.md](alpine-recetas-apcupsd-service.md)
+    * Configurar servidor proxy web tinyproxy [server-tinyproxy.md](server-tinyproxy.md)
 * Alpine
     * Como hacer paquetes de alpine [alpine-recetas-hacer-paquetes-alpine-localmente.md](alpine-recetas-hacer-paquetes-alpine-localmente.md)
 * Guias completas
