@@ -37,9 +37,13 @@ Hoy dia esto se le llama entonces "proxy cache" y solo se usa como medio de
 limitacion o como medio para rendimiento, pero no es muy optimo dado el 
 internet hoy dia es tremendamente rapido aun en velocidades lentas.
 
-## Instalacion de tiniproxy
+## tinyproxy
 
 Este tutorial configurará el servidor como un servidor proxy pero sin cache.
+el paquerte `tinyproxy` es un servidor proxy pero sin hacer cache, que permite 
+filtrado, suplantacion y permisos por autenticacion de usuario. Es simple 
+y efectivo para las funcionalidades basicas sin instalar un servicio tan 
+complejo como `squid` o servicios de socket.
 
 ### preparación
 
@@ -81,8 +85,8 @@ Después de la instalación:
 * archivos de programas
      * `/usr/bin/tinyproxy` el ejecutable que a su vez tambien e el demonio
 * archivos de servicio
-     * /etc/init.d/tinyproxy` script openrc por alpine
-     * /var/log/tinyproxy/tinyproxy.log` archivo de log asumido por el daemon, debe ser igual en el conf
+     * `/etc/init.d/tinyproxy` script openrc por alpine
+     * `/var/log/tinyproxy/tinyproxy.log` archivo de log asumido por el daemon, debe ser igual en el conf
 
 
 ### Configuracion - funcionamiento basico
@@ -130,7 +134,7 @@ esta línea de comando en shell asi:
 ```
 apk add curl curl-doc
 
-export http_proxy="http://localhost:8888/"} && curl -I http://45.181.69.141
+export http_proxy="http://localhost:8888/" && curl -I http://google.com
 ```
 
 ### Configuracion avanzadas
