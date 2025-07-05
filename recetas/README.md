@@ -27,6 +27,9 @@ en un directorio y instalar desde alli con una simple linea
 * Guias completas
     * Alpine 3.14 + Apache2 + PHP 7 + MySQL + OSPOS4 [server-alpine-LAMP-ospos-314.md](server-alpine-LAMP-ospos-314.md)
     * Alpine 3.20 + Apache2 + PHP 8.3 + MySQL + OSPOS3 [server-alpine-LAMP-ospos-320.md](server-alpine-LAMP-ospos-320.md)
+* Assets Management/supports
+    * Snipe-it Gestion de Activos e inventario en Alpine 3.22 [alpine-howto-snipe-it-instal.md](alpine-howto-snipe-it-instal.md)
+    * LGPI Sistema de soporte, de inventario y activos en 3.22 [alpine-howto-lgpi-install.md](alpine-howto-lgpi-install.md)
 
 # Vease tambien
 
