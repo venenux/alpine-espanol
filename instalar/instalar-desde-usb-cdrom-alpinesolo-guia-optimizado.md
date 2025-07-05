@@ -157,6 +157,45 @@ sed -s -i -r 's|INITRD /initramfs|INITRD /boot/initramfs|g' /mnt/boot/extlinux.c
 
 dd if=/usr/share/syslinux/mbr.bin of=/dev/sda
 ```
+Aqui instalo el booloader syslinux pero si queremos grub es un poco mas elaborado:
+
+
+> **Warning** edit `/etc/apk/respositories` and **enable community repositories**!
+
+```
+export BOOTLOADER=grub
+
+apk del syslinux
+
+apk add grub grub-bios
+
+grub-install --compress=no --boot-directory=/mnt/boot /dev/sda
+
+cat > /mnt/etc/default/grub << EOF
+GRUB_DISTRIBUTOR="Alpine"
+GRUB_CMDLINE_LINUX_DEFAULT="rootfstype=ext4 modules=sd-mod,usb-storage,ext4"
+GRUB_TIMEOUT=6
+GRUB_DISABLE_SUBMENU=y
+EOF
+cp -f /mnt/etc/default/grub /etc/default/grub
+
+mount /dev/ /mnt/dev/--bind
+
+mount /proc/ /mnt/proc/--bind
+
+chroot /mnt
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
+
+umount /mnt/proc
+
+umount /mnt/dev
+
+umount /mnt/boot
+```
+
 Lo siguiente es [despues de instalar: configuracion y paquetes](../recetas/alpine-recetas-configuracion-y-paquetes-sistema.md)
 
 ![install-alpine-alpine-setup-3-setup-scripts.png](install-alpine-alpine-setup-3-setup-scripts.png)
