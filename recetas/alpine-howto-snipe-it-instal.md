@@ -95,6 +95,8 @@ http://dl-4.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)
 http://dl-4.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
 EOF
 
+rc-service syslog stop
+
 apk update
 
 apk add openssl perl perl-net-ssleay perl-io-socket-ssl perl-io-tty \
@@ -104,10 +106,14 @@ apk add openssl perl perl-net-ssleay perl-io-socket-ssl perl-io-tty \
  file findutils gawk tree pciutils usbutils lshw tzdata tzdata-utils \
  zip unzip p7zip xz tar cabextract cpio binutils lha gzip lz4 \
  ethtool musl-locales musl-locales-lang  arch-install-scripts util-linux \
- docs iproute2-minimal psmisc net-tools lsof curl wget apkbuild-cpan
+ docs iproute2-minimal psmisc net-tools lsof curl wget apkbuild-cpan \
+ rsyslog
 
 rc-update add consolefont boot
 
+rc-update add rsyslog
+
+rc-service rsyslog start
 
 cat > /etc/hosts << EOF
 127.0.0.1	provision.domino.ver provision localhost.localdomain localhost
@@ -125,26 +131,51 @@ SNipeit is a Web application that will need: a webserver, PHP and a database.
 All of these so continue as root user and runs all the following commands:
 
 ```
-apk add sed apache2 apache2-utils apache2-error apache2-ssl apache2-ctl
+apk add sed apache2 apache2-utils apache2-error apache2-ssl apache2-ctl openssl
 
 mkdir -p /var/www/localhost/htdocs /var/log/apache2
 sed -i -r 's#^Listen.*#Listen 80#g' /etc/apache2/httpd.conf
 sed -i -r 's#^ServerTokens.*#ServerTokens Minimal#g' /etc/apache2/httpd.conf
 sed -i -r 's#.*LoadModule.*modules/mod_alias.so.*#LoadModule alias_module modules/mod_alias.so#g' /etc/apache2/httpd.conf
 sed -i -r 's#.*LoadModule.*modules/mod_rewrite.so.*#LoadModule rewrite_module modules/mod_rewrite.so#g' /etc/apache2/httpd.conf
-chown -R apache:www-data /var/www/localhost/
-chown -R apache:wheel /var/log/apache2
-echo "it works" > /var/www/localhost/htdocs/index.html
-rc-update add apache2 default
+sed -i -r 's#^MaxKeepAliveRequests.*#MaxKeepAliveRequests 500#g' /etc/apache2/conf.d/default.conf
+sed -i -r 's#^Timeout.*#Timeout 90#g' /etc/apache2/conf.d/default.conf
+
+mkdir -p /etc/ssl/certs/
+openssl req -x509 -days 1460 -nodes -newkey rsa:4096 \
+   -subj "/C=VE/ST=Bolivar/L=Upata/O=VenenuX/OU=Systemas:hozYmartillo/CN=$(hostname -d)" \
+   -keyout /etc/ssl/certs/localhost.pem -out /etc/ssl/certs/localhost.pem
+
+sed -i -r 's#^SSLCertificateKeyFile.*/etc/.*#\#SSLCertificateKeyFile /etc/#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^SSLCertificateFile.*/etc/.*#SSLCertificateFile /etc/ssl/certs/localhost.pem#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^SSLCertificateChainFile.*#SSLCertificateChainFile /etc/ssl/certs/localhost.pem#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#\#.?SSLCertificateChainFile.*#SSLCertificateChainFile /etc/ssl/certs/localhost.pem#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^Listen.*#Listen 443#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^<VirtualHost.*#<VirtualHost _default_:443>#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^SSLProtocol.*#SSLProtocol all#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^SSLCipherSuite.*#SSLCipherSuite HIGH:MEDIUM:ALL:!MD5:!RC4:!3DES#g' /etc/apache2/conf.d/ssl.conf
+sed -i -r 's#^SSLProxyCipherSuite.*#SSLProxyCipherSuite HIGH:MEDIUM:ALL:!MD5:!RC4:!3DES#g' /etc/apache2/conf.d/ssl.conf
 
 IP=$(ip a s | grep 'inet ' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0' | head -n1)
 HN=$(hostname)
 echo "$IP $HN" >> /etc/hosts
 
+chown -R apache:www-data /var/www/localhost/
+chown -R apache:wheel /var/log/apache2
+chmod 640 /etc/ssl/certs/localhost.pem
+chown apache:www-data /etc/ssl/certs/localhost.pem
+echo "it works" > /var/www/localhost/htdocs/index.html
+
+rc-update add apache2 default
+
 rc-service apache2 restart
 ```
 
-Ahora configurar php
+**Warning** puede configurar a que use los nombres de servidor por resolucion, 
+con `sed -i -r 's#^UseCanonicalName.*#UseCanonicalName On#g' /etc/apache2/conf.d/default.conf`
+entonces a cada sitio configuras el `ServerName` para que solo funcione en ese caso.
+
+Ahora configurar php, ICU usaremos el paquete full para español
 
 ```
 apk add php83-opcache php83-openssl php83-json php83-bcmath php83-mbstring \
@@ -155,7 +186,7 @@ apk add php83-opcache php83-openssl php83-json php83-bcmath php83-mbstring \
  php83-xmlwriter php83-xsl php83-xmlwriter php83-sodium \
  php83-exif php83-gd php83-pcntl php83-mysqli php83-pdo php83-pdo_mysql \
  php83-sockets php83-curl php83-pear php83-phar php83-session \
- php83 php83-apache2 composer
+ php83 php83-apache2 composer icu-data-full
 
 sed -i -r 's|.*cgi.fix_pathinfo=.*|cgi.fix_pathinfo=1|g' /etc/php*/php.ini
 sed -i -r 's#.*safe_mode =.*#safe_mode = Off#g' /etc/php*/php.ini
@@ -167,7 +198,7 @@ sed -i -r 's#^file_uploads =.*#file_uploads = On#g' /etc/php*/php.ini
 sed -i -r 's#^max_file_uploads =.*#max_file_uploads = 12#g' /etc/php*/php.ini
 sed -i -r 's#^allow_url_fopen = .*#allow_url_fopen = On#g' /etc/php*/php.ini
 sed -i -r 's#^.default_charset =.*#default_charset = "UTF-8"#g' /etc/php*/php.ini
-sed -i -r 's#^.max_execution_time =.*#max_execution_time = 150#g' /etc/php*/php.ini
+sed -i -r 's#^.max_execution_time =.*#max_execution_time = 180#g' /etc/php*/php.ini
 sed -i -r 's#^max_input_time =.*#max_input_time = 90#g' /etc/php*/php.ini
 sed -i -r 's#^session.cookie_secure =.*#session.cookie_secure = on#g' /etc/php*/php.ini
 sed -i -r 's#^session.cookie_samesite =.*#session.cookie_samesite = Lax#g' /etc/php*/php.ini
@@ -196,11 +227,27 @@ default-time-zone = 'America/Caracas'
 EOF
 mysql_tzinfo_to_sql /usr/share/zoneinfo/ | mysql -u root -ptoor1 mysql
 
-sed -i "s|.*max_allowed_packet\s*=.*|max_allowed_packet = 100M|g" /etc/mysql/my.cnf
+cat > /etc/my.cnf.d/mariadb-server-default-highload.cnf << EOF
+[mysqld]
+skip-name-resolve
+local-infile=0
+bind-address=127.0.0.1
+collation_server = utf8mb4_general_ci
+character_set_server = utf8mb4
+max_allowed_packet = 128M
+join_buffer_size    = 96M
+tmp_table_size = 46M
+max_heap_table_size = 46M
+max_connections = 500
+innodb_flush_log_at_timeout = 3
+innodb_read_io_threads  = 32
+innodb_buffer_pool_size = 512M
+innodb_io_capacity     = 2000
+innodb_io_capacity_max = 5000
+innodb_file_format = Barracuda
+wait_timeout = 120
+EOF
 sed -i "s|.*max_allowed_packet\s*=.*|max_allowed_packet = 100M|g" /etc/my.cnf.d/mariadb-server.cnf
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/mysql/my.cnf
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-sed -i "s|.*skip-networking.*|#skip-networking|g" /etc/mysql/my.cnf
 sed -i "s|.*skip-networking.*|#skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 
 rc-service mariadb restart
@@ -209,10 +256,10 @@ rc-update add mariadb
 
 mkdir -p /usr/share/webapps/adminer
 
-wget https://github.com/vrana/adminer/releases/download/v5.3.0/adminer-5.3.0.php -O /usr/share/webapps/adminer/adminer-5.3.php
+wget https://github.com/vrana/adminer/releases/download/v5.3.0/adminer-5.3.0.php -O /usr/share/webapps/adminer/adminer-5.3.0.php
 
 rm -rf /usr/share/webapps/adminer/index.php
-ln -s adminer-5.3.php /usr/share/webapps/adminer/index.php
+ln -s adminer-5.3.0.php /usr/share/webapps/adminer/index.php
 
 cat > /etc/apache2/conf.d/adminer.conf << EOF
 Alias /adminer /usr/share/webapps/adminer/
@@ -225,31 +272,83 @@ EOF
 rc-service apache2 restart
 ```
 
-## 3 - Download and setup GLPI
+## 3 - Download and setup SNIPE-IT
 
 SNIPEIT no tiene una forma de automatizar la instalación en Alpine (solo Debian), 
 ni tampoco una forma de usar un subdirectorio para la implementación en el 
 servidor web, solo basado en dominio, aqui hacemos un truco para realizarlo:
 
 ```
-apk add git
+apk add tcsh git shadow
 
-mkdir -p /usr/share/webapps && rm -rf /usr/share/webapps/snipeit
+add-shell '/bin/csh'
 
-git clone https://github.com/grokability/snipe-it /usr/share/webapps/snipeit
+mkdir -p /etc/skel/Devel 
+
+adduser -S -D -u 888 -h /usr/share/webapps/snipeit -s /bin/csh -g '' snipeitapp
+cat > /usr/share/webapps/snipeit/.gitconfig << EOF
+[core]
+    quotepath = false
+    autocrlf = input
+[http]
+    sslVerify = false
+EOF
+cat > /usr/share/webapps/snipeit/.logout << EOF
+history -c
+/bin/rm -f /usr/share/webapps/snipeit/.mysql_history
+/bin/rm -f /usr/share/webapps/snipeit/.history
+/bin/rm -f /usr/share/webapps/snipeit/.bash_history
+EOF
+cat > /usr/share/webapps/snipeit/.cshrc << EOF
+unsetenv DISPLAY
+set autologout = 30
+set prompt = "$ "
+set history = 0
+set ignoreeof
+EOF
+cp /usr/share/webapps/snipeit/.gitconfig /etc/skel/.gitconfig
+cp /usr/share/webapps/snipeit/.logout /etc/skel/.logout
+
+usermod -a -G apache,www-data,users,ping,input snipeitapp
+
+rm -rf /usr/share/webapps/snipeit/Devel/snipeitapp
+su - snipeitapp -c "mkdir -p /usr/share/webapps/snipeit/Devel"
+su - snipeitapp -c "git clone https://github.com/grokability/snipe-it /usr/share/webapps/snipeit/Devel/snipeitapp"
 
 cat > /etc/apache2/conf.d/snipeit.conf << EOF
-Alias /snipeit /usr/share/webapps/snipeit/public
-<Directory /usr/share/webapps/snipeit/public>
-    Require all granted
-    AllowOverride All
-    Options +Indexes
-</Directory>
+<VirtualHost provision.domino.ver:80>
+    <Directory /usr/share/webapps/snipeit/Devel/snipeitapp/public>
+        Require all granted
+        AllowOverride All
+        Options All
+    </Directory>
+    DocumentRoot /usr/share/webapps/snipeit/Devel/snipeitapp/public
+    ServerName provision.domino.ver
+</VirtualHost>
+<VirtualHost provision.domino.ver:443>
+    <Directory /usr/share/webapps/snipeit/Devel/snipeitapp/public>
+        Require all granted
+        AllowOverride All
+        Options All
+    </Directory>
+    DocumentRoot /usr/share/webapps/snipeit/Devel/snipeitapp/public
+    ServerName provision.domino.ver
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/provision.domino.ver.pem
+    SSLCertificateChainFile /etc/ssl/certs/provision.domino.ver.pem
+</VirtualHost>
 EOF
 
-cat > /usr/share/webapps/snipeit/public/.htaccess << EOF
+mkdir -p /etc/ssl/certs/
+openssl req -x509 -days 1460 -nodes -newkey rsa:4096 \
+   -subj "/C=VE/ST=Bolivar/L=Upata/O=VenenuX/OU=Systemas:hozYmartillo/CN=provision.domino.ver" \
+   -keyout /etc/ssl/certs/provision.domino.ver.pem -out /etc/ssl/certs/provision.domino.ver.pem
+
+chown apache:www-data /etc/ssl/certs/provision.domino.ver.pem
+
+cat > /usr/share/webapps/snipeit/Devel/snipeitapp/.htaccess << EOF
 RewriteEngine On
-RewriteBase /snipeit
+RewriteRule ^\.well-known/acme-challenge/ - [L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/\$
 RewriteRule ^ %1 [L,R=301]
@@ -260,32 +359,6 @@ RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 EOF
 
-IP=$(ip a s | grep 'inet ' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0' | head -n1)
-HN=$(hostname)
-echo "$IP $HN" >> /etc/hosts
-
-cp "/usr/share/webapps/snipeit/.env.example" "/usr/share/webapps/snipeit/.env"
-
-sed -i 's#^APP_URL.*=.*#APP_URL=http://$IP/snipeit#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^LIVEWIRE_URL_PREFIX.*=.*#LIVEWIRE_URL_PREFIX=/snipeit#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^APP_TIMEZONE.*=.*#APP_TIMEZONE=America/Caracas#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^APP_LOCALE.*=.*#APP_LOCALE=es-ES#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^ALLOW_IFRAMING.*=.*#ALLOW_IFRAMING=true#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^REFERRER_POLICY.*=.*#REFERRER_POLICY=origin-when-cross-origin#g' "/usr/share/webapps/snipeit/.env"
-
-chown -R apache:www-data /usr/share/webapps/snipeit
-chown -R snipeit /usr/share/webapps/snipeit/storage 
-chown -R snipeit /usr/share/webapps/snipeit/public/uploads 
-chown -R snipeit /usr/share/webapps/snipeit/bootstrap/cache
-
-rc-service apache2 restart
-```
-
-Después de ejecutar el último comando, debemos ejecutar el instalador de la 
-base de datos. Para ello, continuemos como usuario root y ejecutemos los 
-siguientes comandos para configurar la base de datos:
-
-```
 mysql -u root -ptoor -e "CREATE DATABASE snipeit;"
 mysql -u root -proot -e "CREATE USER 'snipeit_dbuser'@'%' IDENTIFIED BY 'snip.1';FLUSH PRIVILEGES;"
 mysql -u root -proot -e "CREATE USER 'snipeit_dbuser'@'localhost' IDENTIFIED BY 'snip.1';FLUSH PRIVILEGES;"
@@ -293,31 +366,73 @@ mysql -u root -ptoor -e "GRANT ALL PRIVILEGES ON snipeit.* TO 'snipeit_dbuser';"
 mysql -u root -ptoor -e "GRANT ALL PRIVILEGES ON snipeit.* TO 'snipeit_dbuser'@'localhost' WITH GRANT OPTION;"
 mysql -u root -ptoor -e "GRANT SELECT ON mysql.time_zone_name TO 'snipeit_dbuser'@'localhost';"
 
-cd /usr/share/webapps/snipeit
+IP=$(ip a s | grep 'inet ' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0' | head -n1)
+echo "$IP provision.domino.ver" >> /etc/hosts
 
-sed -i 's#^DB_HOST.*=.*#DB_HOST=localhost#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^DB_DATABASE.*=.*#DB_DATABASE=snipeit#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^DB_USERNAME.*=.*#DB_USERNAME=snipeit_dbuser#g' "/usr/share/webapps/snipeit/.env"
-sed -i 's#^DB_PASSWORD.*=.*#DB_PASSWORD=snip.1#g' "/usr/share/webapps/snipeit/.env"
+su - snipeitapp -c "cp /usr/share/webapps/snipeit/Devel/snipeitapp/.env.example /usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+chown -R snipeitapp:www-data /usr/share/webapps/snipeit/Devel/snipeitapp
+sed -i 's#^DB_HOST.*=.*#DB_HOST=localhost#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^DB_DATABASE.*=.*#DB_DATABASE=snipeit#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^DB_USERNAME.*=.*#DB_USERNAME=snipeit_dbuser#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^DB_PASSWORD.*=.*#DB_PASSWORD=snip.1#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i "s#^APP_URL.*=.*#APP_URL=http://provision.domino.ver#g" /usr/share/webapps/snipeit/Devel/snipeitapp/.env
+sed -i 's#^LIVEWIRE_URL_PREFIX.*=.*#LIVEWIRE_URL_PREFIX=/#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^APP_FORCE_TLS.*=.*#APP_FORCE_TLS=true#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^APP_TIMEZONE.*=.*#APP_TIMEZONE=America/Caracas#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^APP_LOCALE.*=.*#APP_LOCALE=es-ES#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^LOG.*=.*#LOG=daily#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
 
-git config --global --add safe.directory /usr/share/webapps/snipeit
+sed -i 's#^ENABLE_CSP.*=.*#ENABLE_CSP=false#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i "s#^APP_TRUSTED_PROXIES.*=.*#APP_TRUSTED_PROXIES=$IP#g" "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^APP_ALLOW_INSECURE_HOSTS.*=.*#APP_ALLOW_INSECURE_HOSTS=true#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^ALLOW_IFRAMING.*=.*#ALLOW_IFRAMING=true#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^REFERRER_POLICY.*=.*#REFERRER_POLICY=origin-when-cross-origin#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^API_TOKEN_EXPIRATION_YEARS.*=.*#API_TOKEN_EXPIRATION_YEARS=15#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
 
-chown apache:root /var/www
+sed -i 's#^MAIL_MAILER.*=.*#MAIL_MAILER=smtp#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_TLS_VERIFY_PEER.*=.*#MAIL_TLS_VERIFY_PEER=false#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env"
+sed -i 's#^MAIL_HOST.*=.*#MAIL_HOST=live.smtp.mailtrap.io#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_PORT.*=.*#MAIL_PORT=587#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_AUTO_EMBED_METHOD.*=.*#MAIL_AUTO_EMBED_METHOD=base64#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_USERNAME.*=.*#MAIL_USERNAME=api#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_PASSWORD.*=.*#MAIL_PASSWORD=apipey#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_FROM_ADDR.*=.*#MAIL_FROM_ADDR=smtp@demomailtrap.co#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
+sed -i 's#^MAIL_REPLYTO_ADDR.*=.*#MAIL_REPLYTO_ADDR=smtp@demomailtrap.co#g' "/usr/share/webapps/snipeit/Devel/snipeitapp/.env" #unsafe-url
 
-su -s /bin/bash -l apache -c "composer install --no-dev --prefer-source --working-dir /usr/share/webapps/snipeit"
+chown -R snipeitapp:www-data /usr/share/webapps/snipeit/Devel/snipeitapp
+chmod -R 775 /usr/share/webapps/snipeit/Devel/snipeitapp/storage 
+chown -R snipeitapp /usr/share/webapps/snipeit/Devel/snipeitapp/storage 
+chmod -R 775 /usr/share/webapps/snipeit/Devel/snipeitapp/public/uploads 
+chown -R snipeitapp /usr/share/webapps/snipeit/Devel/snipeitapp/public/uploads 
+chmod 775 /usr/share/webapps/snipeit/Devel/snipeitapp/bootstrap/cache
+chown -R snipeitapp /usr/share/webapps/snipeit/Devel/snipeitapp/bootstrap/cache
 
-chown apache:www-data /usr/share/webapps/snipeit/vendor
-chmod 777 /usr/share/webapps/snipeit/storage/framework/cache
-chmod 775 /usr/share/webapps/snipeit/storage
+su - snipeitapp -c "composer --global config process-timeout 3000"
 
-su -s /bin/bash -l apache -c "php /usr/share/webapps/snipeit/artisan key:generate --force"
+su - snipeitapp -c "composer install --no-dev --prefer-source --working-dir /usr/share/webapps/snipeit/Devel/snipeitapp"
+
+su - snipeitapp -c "cd /usr/share/webapps/snipeit/Devel/snipeitapp && php artisan cache:clear && php artisan config:clear"
+
+su - snipeitapp -c "cd /usr/share/webapps/snipeit/Devel/snipeitapp && php artisan route:clear && php artisan view:clear"
+
+su - snipeitapp -c "cd /usr/share/webapps/snipeit/Devel/snipeitapp && php artisan key:generate --force"
+
+su - snipeitapp -c "cd /usr/share/webapps/snipeit/Devel/snipeitapp && php artisan config:cache"
+
+su - snipeitapp -c "cd /usr/share/webapps/snipeit/Devel/snipeitapp && php artisan migrate --force"
+
+echo "* * * * * php /usr/share/webapps/snipeit/Devel/snipeitapp/artisan schedule:run >> /dev/null 2>&1" | crontab -u snipeitappschedule -
+
+rc-service apache2 restart
+```
 
 su -s /bin/bash -l apache -c "php /usr/share/webapps/snipeit/artisan migrate --force"
 
 su -s /bin/bash -l apache -c "php /usr/share/webapps/snipeit/artisan cache:clear"
 ```
 
-Now after that, you can access and finish setup using 
+Now after that, you can access and finish setup using the web browser pinted to 
+the ip of the web server.
 
 ## 4 - Configuration for remote access
 
@@ -385,7 +500,7 @@ Esta guía asume que tiene un puerto serie habilitado en el ordenador de destino
   - 🇧🇬 https://t.me/alpine_linux_bulgarian (dual english bulgarian, low activity)
   - 🇨🇳 https://t.me/alpine_linux_chinese (dual english chinese, low activity)
   - 📡 https://t.me/opentechnologies (open languajes but english as main)
-- Matrix
+- 📟 Matrix
   - 👥 https://matrix.to/#/#alpine-linux-english:matrix.org
 
 # LICENSE
